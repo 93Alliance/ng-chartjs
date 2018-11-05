@@ -1,0 +1,8 @@
+.example-button-row {
+    margin-top: 16px;
+}
+.plugin-chart{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}

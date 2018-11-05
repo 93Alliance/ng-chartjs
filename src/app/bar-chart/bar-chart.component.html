@@ -1,0 +1,6 @@
+<div style="width: 600px; text-align: center; margin-top:20px">
+  <div>Bar Chart</div>
+  <canvas ngxChartjs [datasets]="barChartData" [labels]="barChartLabels"
+    [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType"
+    (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+</div>

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import * as ChartAnnotation from 'chartjs-plugin-annotation';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'ngx-lite-chartjs';
+
+  // inlinePlugins
+
 }

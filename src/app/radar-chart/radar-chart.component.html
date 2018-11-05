@@ -1,0 +1,6 @@
+<div style="width: 800px; text-align: center;margin-top:20px">
+  <div>Radar Chart</div>
+  <canvas ngxChartjs [datasets]="radarChartData" [labels]="radarChartLabels"
+    [chartType]="radarChartType" (chartHover)="chartHovered($event)"
+    (chartClick)="chartClicked($event)"></canvas>
+</div>

@@ -1,0 +1,21 @@
+
+<div style="text-align: center">
+    <div style="width: 600px; margin-top:20px">
+      <div>Inline Plugin</div>
+      <div style="position: relative; width: 600px;">
+        <canvas ngxChartjs [datasets]="lineChartData" [labels]="lineChartLabels"
+          [options]="lineChartOptions" [legend]="lineChartLegend" [chartType]="lineChartType"
+          [inlinePlugins]="inlinePlugin"></canvas>
+      </div>
+    </div>
+    <!-- <div>
+        <mat-tab-group>
+            <mat-tab label="Html">
+                <ngx-highlight [code]="htmlCode" lang="html"></ngx-highlight>
+            </mat-tab>
+            <mat-tab label="Typescript">
+                <ngx-highlight [code]="tsCode" lang="typescript"></ngx-highlight>
+            </mat-tab>
+        </mat-tab-group>
+    </div> -->
+</div>
