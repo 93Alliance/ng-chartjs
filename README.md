@@ -1,27 +1,30 @@
-# NgxLiteChartjs
+# ngx-chartjs
+A fully functional Angular2+ library.This chart library is fork `ng2-charts`.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.1.5.
+> Thanks to valor-software's [ng2-charts](https://github.com/valor-software/ng2-charts).
 
-## Development server
+## Demo
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Installation
 
-## Code scaffolding
+## Usage
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## API
 
-## Build
+### Chart types
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+- line
+- bar
+- radar
+- pie
+- polarArea
 
-## Running unit tests
+### Plugins
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Properties
 
-## Running end-to-end tests
+### Events
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+## License
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+The MIT License (see the [LICENSE](https://github.com/valor-software/ng2-charts/blob/master/LICENSE) file for the full text)

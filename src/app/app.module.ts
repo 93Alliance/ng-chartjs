@@ -12,8 +12,6 @@ import { MaterialModule } from './shared/material.module';
 import { PluginComponent } from './plugin/plugin.component';
 import { GlobalPluginComponent } from './global-plugin/global-plugin.component';
 
-import { NgxHighlightModule } from '@petkit/ngx-highlight';
-
 import * as ChartAnnotation from 'chartjs-plugin-annotation';
 import { DoughnutChartComponent } from './doughnut-chart/doughnut-chart.component';
 import { RadarChartComponent } from './radar-chart/radar-chart.component';
@@ -81,8 +79,7 @@ const horizonalLinePlugin = {
     BrowserModule,
     NgxChartjsModule.registerPlugin([horizonalLinePlugin, ChartAnnotation]),
     BrowserAnimationsModule,
-    MaterialModule,
-    NgxHighlightModule
+    MaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]
