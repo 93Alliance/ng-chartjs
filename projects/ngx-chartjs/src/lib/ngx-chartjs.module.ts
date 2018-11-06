@@ -1,38 +1,47 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { NgModule, InjectionToken, ModuleWithProviders } from '@angular/core';
 import { NgxChartjsDirective } from './ngx-chartjs.directive';
+import { RegisterPluginService } from './register-plugin.service';
+import { NgxChartjsPluginToken } from './plugin-token';
 
-import { Chart } from 'chart.js';
+// import { Chart } from 'chart.js';
 
-export function NgxChartjsPluginFactory(plugin: any[]): any {
-  if (plugin.length === 0 || !plugin) {
-    return;
-  } else {
-    for (let i = 0; i < plugin.length; i++) {
-      Chart.plugins.register(plugin[i]);
-    }
-  }
-}
 
+
+// export const NgxChartjsPluginConfigToken: InjectionToken<any[]>
+//   = new InjectionToken<any[]>('[ngx-chart-js] Global Plugin Config');
+
+// export function NgxChartjsPluginFactory(plugins: any[]): any {
+//   return () => new RegisterPluginService(plugins);
+// }
+
+// export function NgxChartjsPluginFactory(plugins: any[]): any {
+//   if (plugins.length !== 0 || plugins) {
+//     for (let i = 0; i < plugins.length; i++) {
+//       Chart.plugins.register(plugins[i]);
+//     }
+//   }
+// }
 
 @NgModule({
   imports: [
   ],
   declarations: [NgxChartjsDirective],
-  exports: [NgxChartjsDirective]
+  exports: [NgxChartjsDirective],
+  providers: [RegisterPluginService]
 })
 export class NgxChartjsModule {
   /**
    * Register a plugin.
    * @param plugin
    */
-  public static registerPlugin(plugin: any[]): ModuleWithProviders {
+  public static registerPlugin(plugins: any[] = []): ModuleWithProviders {
     return {
       ngModule: NgxChartjsModule,
       providers: [
         {
-          provide: NgxChartjsPluginFactory,
-          useFactory: NgxChartjsPluginFactory(plugin)
-        },
+          provide: NgxChartjsPluginToken,
+          useValue: plugins
+        }
       ]
     };
   }

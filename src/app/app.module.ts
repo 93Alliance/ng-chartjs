@@ -17,50 +17,54 @@ import { DoughnutChartComponent } from './doughnut-chart/doughnut-chart.componen
 import { RadarChartComponent } from './radar-chart/radar-chart.component';
 import { PolarChartComponent } from './polar-chart/polar-chart.component';
 
-const horizonalLinePlugin = {
-  afterDraw: function (chartInstance) {
-    const yScale = chartInstance.scales['y-axis-0'];
-    const canvas = chartInstance.chart;
-    const ctx = canvas.ctx;
-    let index;
-    let line;
-    let style;
-    let yValue;
+const chartAnnotation = ChartAnnotation;
+// chartAnnotation['id'] = 'annotation';
+export function horizonalLine(chartInstance) {
+  const yScale = chartInstance.scales['y-axis-0'];
+  const canvas = chartInstance.chart;
+  const ctx = canvas.ctx;
+  let index;
+  let line;
+  let style;
+  let yValue;
 
-    if (chartInstance.options.horizontalLine) {
-      for (index = 0; index < chartInstance.options.horizontalLine.length; index++) {
-        line = chartInstance.options.horizontalLine[index];
+  if (chartInstance.options.horizontalLine) {
+    for (index = 0; index < chartInstance.options.horizontalLine.length; index++) {
+      line = chartInstance.options.horizontalLine[index];
 
-        if (!line.style) {
-          style = 'rgba(169,169,169, .6)';
-        } else {
-          style = line.style;
-        }
-
-        if (line.y) {
-          yValue = yScale.getPixelForValue(line.y);
-        } else {
-          yValue = 0;
-        }
-
-        ctx.lineWidth = 3;
-
-        if (yValue) {
-          ctx.beginPath();
-          ctx.moveTo(0, yValue);
-          ctx.lineTo(canvas.width, yValue);
-          ctx.strokeStyle = style;
-          ctx.stroke();
-        }
-
-        if (line.text) {
-          ctx.fillStyle = style;
-          ctx.fillText(line.text, 0, yValue + ctx.lineWidth);
-        }
+      if (!line.style) {
+        style = 'rgba(169,169,169, .6)';
+      } else {
+        style = line.style;
       }
-      return;
+
+      if (line.y) {
+        yValue = yScale.getPixelForValue(line.y);
+      } else {
+        yValue = 0;
+      }
+
+      ctx.lineWidth = 3;
+
+      if (yValue) {
+        ctx.beginPath();
+        ctx.moveTo(0, yValue);
+        ctx.lineTo(canvas.width, yValue);
+        ctx.strokeStyle = style;
+        ctx.stroke();
+      }
+
+      if (line.text) {
+        ctx.fillStyle = style;
+        ctx.fillText(line.text, 0, yValue + ctx.lineWidth);
+      }
     }
+    return;
   }
+}
+const horizonalLinePlugin = {
+  // id: 'cutomline',
+  beforeDraw: horizonalLine
 };
 
 @NgModule({
@@ -77,7 +81,7 @@ const horizonalLinePlugin = {
   ],
   imports: [
     BrowserModule,
-    NgxChartjsModule.registerPlugin([horizonalLinePlugin, ChartAnnotation]),
+    NgxChartjsModule.registerPlugin([horizonalLinePlugin, chartAnnotation]),
     BrowserAnimationsModule,
     MaterialModule
   ],

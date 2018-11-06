@@ -1,3 +1,4 @@
+import { RegisterPluginService } from './register-plugin.service';
 import {
   OnDestroy,
   OnInit,
@@ -45,7 +46,7 @@ export class NgxChartjsDirective implements OnDestroy, OnChanges, OnInit {
 
   private element: ElementRef;
 
-  public constructor(element: ElementRef) {
+  public constructor(element: ElementRef, private registerPluginService: RegisterPluginService) {
     this.element = element;   // 获取指令所在canvas元素
   }
 
