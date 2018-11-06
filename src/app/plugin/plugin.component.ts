@@ -38,11 +38,7 @@ export class PluginComponent implements OnInit {
   public lineChartLegend = true;
   public lineChartType = 'line';
   inlinePlugin: any;
-  horizonalLinePlugin: any;
   textPlugin: any;
-
-  htmlCode: string;
-  tsCode: string;
   constructor() { }
 
   ngOnInit() {

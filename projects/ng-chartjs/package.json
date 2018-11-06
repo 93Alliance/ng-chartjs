@@ -8,7 +8,7 @@
     "@angular/common": "*",
     "@angular/core": "*"
   },
-  "description": "This is a record chart.js library.",
+  "description": "This is a Angular chart.js library.",
   "main": "karma.conf.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
