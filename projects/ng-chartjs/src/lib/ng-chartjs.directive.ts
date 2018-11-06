@@ -34,15 +34,20 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
   // 是否显示图例
   @Input() legend: boolean;
 
+  @Input() adding: { labels: any[], data: any[][] };
+  @Input() removing: {orientation: string};  // orientation is 'oldest' or 'latest
+  @Input() resetOption: any;
+
   // 鼠标点击图表所有的区域
   @Output() chartClick: EventEmitter<any> = new EventEmitter();
   // 鼠标悬浮在标签或者活跃的点上面时
   @Output() chartHover: EventEmitter<any> = new EventEmitter();
 
   public ctx: any;
-  public chart: Chart;
+  public chart: any;
   private cvs: any;
   private initFlag = false;
+  private hasChanges = false;
 
   private element: ElementRef;
 
@@ -63,6 +68,7 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
   ngOnChanges(changes: SimpleChanges) {
     // TODO: 插件变化刷新，开放刷新按钮
     if (this.initFlag) {
+      console.log(changes);
       // Check if the changes are in the data or datasets
       if (changes.hasOwnProperty('data') || changes.hasOwnProperty('datasets')) {
         if (changes.data) {
@@ -70,13 +76,44 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
         } else {
           this.updateChartData(changes.datasets.currentValue);
         }
-        this.chart.update();
-      } else if (changes.hasOwnProperty('labels')) {
+        this.hasChanges = true;
+      }
+
+      if (changes.hasOwnProperty('labels')) {
         this.chart.data.labels = changes.labels.currentValue;
+        this.hasChanges = true;
+      }
+
+      if (changes.hasOwnProperty('legend')) {
+        if (changes.legend.currentValue !== changes.legend.previousValue) {
+          this.chart.options.legend.display = changes.legend.currentValue;
+          this.hasChanges = true;
+        }
+      }
+
+      if (changes.hasOwnProperty('adding')) {
+        this.addData(changes.adding.currentValue.labels, changes.adding.currentValue.data);
+        this.hasChanges = true;
+      }
+
+      if (changes.hasOwnProperty('removing')) {
+        if (changes.removing.currentValue.orientation === 'oldest' || changes.removing.currentValue.orientation === 'latest') {
+          this.removeData(changes.removing.currentValue.orientation);
+          this.hasChanges = true;
+        }
+      }
+
+      if (changes.hasOwnProperty('resetOption')) {
+        Object.assign(this.chart.options, changes.resetOption.currentValue);
+        this.hasChanges = true;
+      }
+      // else {
+      //   // otherwise rebuild the chart
+      //   this.refresh();
+      // }
+      if (this.hasChanges) {
         this.chart.update();
-      } else {
-        // otherwise rebuild the chart
-        this.refresh();
+        this.hasChanges = false;
       }
     }
   }
@@ -93,6 +130,40 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
     this.chart = this.getChartBuilder(this.ctx/*, data, this.options*/);
   }
 
+  private addData(labels: any[], data: any[][]) {
+    console.log(labels, data);
+    if (labels.length === 0 || data.length === 0) {
+      return;
+    }
+    // update labels
+    labels.forEach((label) => { this.chart.data.labels.push(label); });
+
+    this.chart.data.datasets.forEach((dataset, index) => {
+      if (data[index]) {
+        for (let i = 0; i < data[index].length; i++) {
+          dataset.data.push(data[index][i]);
+        }
+      } else {
+        console.log('The added data does not match the original data');
+        return;
+      }
+    });
+  }
+  // direction is 'ildest' or 'latest'
+  private removeData(direction: string) {
+    if (direction === 'latest') {
+      this.chart.data.labels.pop();
+      this.chart.data.datasets.forEach((dataset) => {
+            dataset.data.pop();
+      });
+      return;
+    }
+    if (direction === 'oldest') {
+      return;
+    }
+
+
+  }
   private updateChartData(newDataValues: number[] | any[]): void {
     if (Array.isArray(newDataValues[0].data)) {
       this.chart.data.datasets.forEach((dataset: any, i: number) => {

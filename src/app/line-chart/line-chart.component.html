@@ -2,8 +2,13 @@
 
 <div style="width: 600px; text-align: center;margin-top:20px">
     <div>Multi Line Plugin</div>
-  <canvas ngxChartjs [datasets]="lineChartData" [labels]="lineChartLabels"
+  <canvas *ngIf="true" #linechart ngxChartjs [datasets]="lineChartData" [labels]="lineChartLabels"
     [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend"
-    [chartType]="lineChartType"></canvas>
-  <button mat-raised-button color="primary" (click)="changeLabels()">Change Labels</button>
+    [chartType]="lineChartType" [adding]="updateData" [removing]="removing"></canvas>
+    <div class="example-button-row">
+      <button mat-raised-button color="primary" (click)="changeLabels()">Change Labels</button>
+      <button mat-raised-button color="primary" (click)="addNewData()">Add a new data</button>
+      <button mat-raised-button color="primary" (click)="removeData()">Remove data</button>
+      <button mat-raised-button color="primary" (click)="toggleLegend()">Toggle Legend</button>
+    </div>
 </div>

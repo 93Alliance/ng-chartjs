@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-line-chart',
@@ -46,6 +46,9 @@ export class LineChartComponent implements OnInit {
   ];
   public lineChartLegend = true;
   public lineChartType = 'line';
+  updateData: any;
+  isUpdate: boolean;
+  removing: any;
   constructor() { }
 
   ngOnInit() {
@@ -60,5 +63,16 @@ export class LineChartComponent implements OnInit {
       this.lineChartLabels = ['1', '2', '3', '4', '5', '6', '7'];
       this.currentLineChartLabelsIdx = 0;
     }
+  }
+
+  addNewData() {
+    this.updateData = {labels: ['August', 'September'], data: [[10, 30, 47], [50, 69, 58]]};
+  }
+
+  removeData() {
+    this.removing = {orientation: 'latest'};
+  }
+  toggleLegend() {
+    this.lineChartLegend = !this.lineChartLegend;
   }
 }
