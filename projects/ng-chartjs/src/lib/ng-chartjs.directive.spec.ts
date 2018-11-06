@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NgxChartjsDirective } from './ngx-chartjs.directive';
+import { NgChartjsDirective } from './ng-chartjs.directive';
 
 describe('NgxChartjsComponent', () => {
-  let component: NgxChartjsDirective;
-  let fixture: ComponentFixture<NgxChartjsDirective>;
+  let component: NgChartjsDirective;
+  let fixture: ComponentFixture<NgChartjsDirective>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NgxChartjsDirective ]
+      declarations: [ NgChartjsDirective ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NgxChartjsDirective);
+    fixture = TestBed.createComponent(NgChartjsDirective);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

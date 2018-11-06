@@ -1,8 +1,10 @@
 {
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
-  "dest": "../../dist/ngx-chartjs",
-  "deleteDestPath": false,
+  "dest": "../../dist/ng-chartjs",
   "lib": {
     "entryFile": "src/public_api.ts"
-  }
+  },
+  "whitelistedNonPeerDependencies": [
+    "chart.js"
+  ]
 }

@@ -15,7 +15,7 @@ import { Chart } from 'chart.js';
 import { getColors } from './colors';
 /* tslint:disable-next-line */
 @Directive({ selector: 'canvas[ngxChartjs]', exportAs: 'ngx-chart-js' })
-export class NgxChartjsDirective implements OnDestroy, OnChanges, OnInit {
+export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
 
   // 图表的点集，它应该是数组<number []>仅用于线，条和雷达，否则数字[];
   @Input() data: number[] | any[];

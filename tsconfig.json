@@ -18,11 +18,11 @@
       "dom"
     ],
     "paths": {
-      "ngx-chartjs": [
-        "dist/ngx-chartjs"
+      "ng-chartjs": [
+        "dist/ng-chartjs"
       ],
-      "ngx-chartjs/*": [
-        "dist/ngx-chartjs/*"
+      "ng-chartjs/*": [
+        "dist/ng-chartjs/*"
       ]
     }
   }

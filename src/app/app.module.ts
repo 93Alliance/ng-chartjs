@@ -1,4 +1,4 @@
-import { NgxChartjsModule } from './../../projects/ngx-chartjs/src/lib/ngx-chartjs.module';
+import { NgChartjsModule } from './../../projects/ng-chartjs/src/lib/ng-chartjs.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -81,7 +81,7 @@ const horizonalLinePlugin = {
   ],
   imports: [
     BrowserModule,
-    NgxChartjsModule.registerPlugin([horizonalLinePlugin, chartAnnotation]),
+    NgChartjsModule.registerPlugin([horizonalLinePlugin, chartAnnotation]),
     BrowserAnimationsModule,
     MaterialModule
   ],

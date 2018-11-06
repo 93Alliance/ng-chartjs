@@ -99,20 +99,13 @@ function getRandomColor(): number[] {
     return [getRandomInt(0, 255), getRandomInt(0, 255), getRandomInt(0, 255)];
 }
 
-/**
- * Generate colors for line|bar charts
- * @param index
- * @returns {number[]|Color}
- */
+// Generate colors for line|bar charts
 function generateColor(index: number): number[] {
     return DefaultColors[index] || getRandomColor();
 }
 
-/**
- * Generate colors for pie|doughnut charts
- * @param count
- * @returns {Colors}
- */
+
+// Generate colors for pie|doughnut charts
 function generateColors(count: number): number[][] {
     const colorsArr: number[][] = new Array(count);
     for (let i = 0; i < count; i++) {
@@ -121,13 +114,7 @@ function generateColors(count: number): number[][] {
     return colorsArr;
 }
 
-/**
- * Generate colors by chart type
- * @param chartType
- * @param index
- * @param count
- * @returns {Color}
- */
+// Generate colors by chart type
 export function getColors(chartType: string, index: number, count: number): Color | number[] {
     if (chartType === 'pie' || chartType === 'doughnut') {
         return formatPieColors(generateColors(count));

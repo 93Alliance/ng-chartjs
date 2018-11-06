@@ -1,5 +1,5 @@
-# ngx-chartjs
-A fully functional Angular2+ library.This chart library is fork `ng2-charts`.
+# ng-chartjs
+A fully functional Angular2+ chart.js library.This chart library is fork `ng2-charts`.
 
 > Thanks to valor-software's [ng2-charts](https://github.com/valor-software/ng2-charts).
 
