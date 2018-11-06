@@ -308,6 +308,9 @@ options | ?any |   chart options (as from [Chart.js documentation](http://www.ch
 colors | ?Array<any> |  data colors, will use default and|or random colors if not specified (see below)
 legend | ?boolean=false | if true show legend below the chart, otherwise not be shown
 inlinePlugins |  any[] | Chart.js inline plugin. [Chart.js Plugins](https://www.chartjs.org/docs/master/developers/plugins.html), [Other Reference](https://riptutorial.com/chart-js/topic/6510/plugins)
+adding | `{ labels: any[], data: any[][] }` |  You can add new data and update chart. It needs to be reassigned to trigger.
+removing | `{orientation: string}` |  You can delete the latest or oldest  data.It needs to be reassigned to trigger
+resetOption | any | Reset options can trigger update chart
 
 ### Events
 

@@ -66,7 +66,7 @@ export class LineChartComponent implements OnInit {
   }
 
   addNewData() {
-    this.updateData = {labels: ['August', 'September'], data: [[10, 30, 47], [50, 69, 58]]};
+    this.updateData = {labels: ['August', 'September'], data: [[10, 30], [50, 58], [47, 49]]};
   }
 
   removeData() {

@@ -68,7 +68,6 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
   ngOnChanges(changes: SimpleChanges) {
     // TODO: 插件变化刷新，开放刷新按钮
     if (this.initFlag) {
-      console.log(changes);
       // Check if the changes are in the data or datasets
       if (changes.hasOwnProperty('data') || changes.hasOwnProperty('datasets')) {
         if (changes.data) {
@@ -131,7 +130,6 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
   }
 
   private addData(labels: any[], data: any[][]) {
-    console.log(labels, data);
     if (labels.length === 0 || data.length === 0) {
       return;
     }
@@ -161,8 +159,6 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
     if (direction === 'oldest') {
       return;
     }
-
-
   }
   private updateChartData(newDataValues: number[] | any[]): void {
     if (Array.isArray(newDataValues[0].data)) {
