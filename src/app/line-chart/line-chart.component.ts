@@ -13,7 +13,8 @@ export class LineChartComponent implements OnInit {
     { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' },
     { data: [18, 48, 77, 9, 100, 27, 40], label: 'Series C' }
   ];
-  lineChartLabels: Array<any> = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+  currentLineChartLabelsIdx = 0;
+  lineChartLabels: Array<any>;
   lineChartOptions: any = {
     responsive: true
   };
@@ -48,6 +49,16 @@ export class LineChartComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.changeLabels();
   }
 
+  changeLabels() {
+    if (this.currentLineChartLabelsIdx === 0) {
+      this.lineChartLabels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+      this.currentLineChartLabelsIdx = 1;
+    } else {
+      this.lineChartLabels = ['1', '2', '3', '4', '5', '6', '7'];
+      this.currentLineChartLabelsIdx = 0;
+    }
+  }
 }

@@ -40,7 +40,7 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
   @Output() chartHover: EventEmitter<any> = new EventEmitter();
 
   public ctx: any;
-  public chart: any;
+  public chart: Chart;
   private cvs: any;
   private initFlag = false;
 
@@ -70,7 +70,9 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
         } else {
           this.updateChartData(changes.datasets.currentValue);
         }
-
+        this.chart.update();
+      } else if (changes.hasOwnProperty('labels')) {
+        this.chart.data.labels = changes.labels.currentValue;
         this.chart.update();
       } else {
         // otherwise rebuild the chart
@@ -80,7 +82,10 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
   }
 
   ngOnDestroy() {
-
+    if (this.chart) {
+      this.chart.destroy();
+      this.chart = void 0;
+    }
   }
 
   private refresh(): any {
