@@ -58,7 +58,7 @@ eg. [source code](https://github.com/93Alliance/ng-chartjs/tree/master/src/app/p
 
 `html` file.
 ```
-<canvas ngxChartjs [datasets]="lineChartData" [labels]="lineChartLabels"
+<canvas ngChartjs [datasets]="lineChartData" [labels]="lineChartLabels"
           [options]="lineChartOptions" [legend]="lineChartLegend" [chartType]="lineChartType"
           [inlinePlugins]="inlinePlugin">
 </canvas>
@@ -197,7 +197,7 @@ imports: [
 
 `html` file.
 ```
- <canvas ngxChartjs [datasets]="lineChartData" [labels]="lineChartLabels"
+ <canvas ngChartjs [datasets]="lineChartData" [labels]="lineChartLabels"
             [options]="lineChartOptions" [legend]="lineChartLegend" [chartType]="lineChartType">
 </canvas>
 ```
