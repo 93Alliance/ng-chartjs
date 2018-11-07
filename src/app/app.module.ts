@@ -82,6 +82,7 @@ const horizonalLinePlugin = {
   imports: [
     BrowserModule,
     NgChartjsModule.registerPlugin([horizonalLinePlugin, chartAnnotation]),
+    NgChartjsModule,
     BrowserAnimationsModule,
     MaterialModule
   ],

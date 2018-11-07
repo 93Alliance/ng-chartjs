@@ -1,14 +1,30 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { NgChartjsDirective } from './ng-chartjs.directive';
+import { NgChartjsDefaultPluginToken, NgChartjsCustomPluginToken } from './plugin-token';
 import { RegisterPluginService } from './register-plugin.service';
-import { NgChartjsPluginToken } from './plugin-token';
+import { PluginConfig } from './pluginsConfig';
+
+
+export function ngChartjsCustomPluginsFactory(plugins: any[]): PluginConfig {
+  return new PluginConfig(plugins);
+}
+
+export function ngChartjsDefaultPluginsFactory(): PluginConfig {
+  return new PluginConfig([]);
+}
+
 
 @NgModule({
   imports: [
   ],
   declarations: [NgChartjsDirective],
   exports: [NgChartjsDirective],
-  providers: [RegisterPluginService]
+  providers: [
+    {
+      provide: NgChartjsCustomPluginToken,
+      useFactory: ngChartjsDefaultPluginsFactory
+    }
+  ]
 })
 export class NgChartjsModule {
   /**
@@ -20,8 +36,13 @@ export class NgChartjsModule {
       ngModule: NgChartjsModule,
       providers: [
         {
-          provide: NgChartjsPluginToken,
+          provide: NgChartjsDefaultPluginToken,
           useValue: plugins
+        },
+        {
+          deps: [NgChartjsDefaultPluginToken],
+          provide: NgChartjsCustomPluginToken,
+          useFactory: ngChartjsCustomPluginsFactory
         }
       ]
     };
