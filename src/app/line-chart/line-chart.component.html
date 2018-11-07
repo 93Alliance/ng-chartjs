@@ -2,7 +2,7 @@
 
 <div style="width: 600px; text-align: center;margin-top:20px">
     <div>Multi Line Plugin</div>
-  <canvas *ngIf="true" #linechart ngxChartjs [datasets]="lineChartData" [labels]="lineChartLabels"
+  <canvas *ngIf="true" #linechart ngChartjs [datasets]="lineChartData" [labels]="lineChartLabels"
     [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend"
     [chartType]="lineChartType" [adding]="updateData" [removing]="removing"></canvas>
     <div class="example-button-row">
