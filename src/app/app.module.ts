@@ -16,6 +16,7 @@ import * as ChartAnnotation from 'chartjs-plugin-annotation';
 import { DoughnutChartComponent } from './doughnut-chart/doughnut-chart.component';
 import { RadarChartComponent } from './radar-chart/radar-chart.component';
 import { PolarChartComponent } from './polar-chart/polar-chart.component';
+import { ResetOptionComponent } from './reset-option/reset-option.component';
 
 const chartAnnotation = ChartAnnotation;
 // chartAnnotation['id'] = 'annotation';
@@ -77,7 +78,8 @@ const horizonalLinePlugin = {
     GlobalPluginComponent,
     DoughnutChartComponent,
     RadarChartComponent,
-    PolarChartComponent
+    PolarChartComponent,
+    ResetOptionComponent
   ],
   imports: [
     BrowserModule,

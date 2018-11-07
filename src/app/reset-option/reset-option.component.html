@@ -1,0 +1,11 @@
+
+<div style="text-align: center">
+  <div style="width: 600px; margin-top:20px">
+    <div>Reset Option</div>
+    <div style="position: relative; width: 600px;">
+      <canvas ngChartjs [datasets]="lineChartData" [labels]="lineChartLabels"
+      [options]="lineChartOptions" [legend]="lineChartLegend" [chartType]="lineChartType" [resetOption]="resetOption"></canvas>
+    </div>
+    <button mat-raised-button color="primary" (click)="changeOption()">Change Labels</button>
+  </div>
+</div>
