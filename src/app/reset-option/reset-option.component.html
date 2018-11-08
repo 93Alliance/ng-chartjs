@@ -6,6 +6,14 @@
       <canvas ngChartjs [datasets]="lineChartData" [labels]="lineChartLabels"
       [options]="lineChartOptions" [legend]="lineChartLegend" [chartType]="lineChartType" [resetOption]="resetOption"></canvas>
     </div>
-    <button mat-raised-button color="primary" (click)="changeOption()">Change Labels</button>
+    <button mat-raised-button color="primary" (click)="changeOption()">Change Labels Color</button>
+  </div>
+  <div style="width: 600px; margin-top:20px">
+    <div>Get Chart Instance</div>
+    <div style="position: relative; width: 600px;">
+      <canvas id="testChart" ngChartjs [datasets]="lineChartData" [labels]="lineChartLabels"
+      [options]="lineChartOptions" [legend]="lineChartLegend" [chartType]="lineChartType" [resetOption]="resetOption"></canvas>
+    </div>
+    <button mat-raised-button color="primary" (click)="getChartInstance()">Print Chart Instance</button>
   </div>
 </div>

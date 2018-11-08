@@ -1,4 +1,4 @@
-import { RegisterPluginService } from './register-plugin.service';
+import { StoreService } from './store.service';
 import {
   OnDestroy,
   OnInit,
@@ -12,6 +12,7 @@ import {
 } from '@angular/core';
 import { Chart } from 'chart.js';
 
+import { NgChartjsService } from './ng-chartjs.service';
 import { getColors } from './colors';
 /* tslint:disable-next-line */
 @Directive({ selector: 'canvas[ngChartjs]', exportAs: 'ng-chart-js' })
@@ -35,7 +36,7 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
   @Input() legend: boolean;
 
   @Input() adding: { labels: any[], data: any[][] };
-  @Input() removing: {orientation: string};  // orientation is 'oldest' or 'latest
+  @Input() removing: { orientation: string };  // orientation is 'oldest' or 'latest
   @Input() resetOption: any;
 
   // 鼠标点击图表所有的区域
@@ -51,7 +52,9 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
 
   private element: ElementRef;
 
-  public constructor(element: ElementRef, private registerPluginService: RegisterPluginService) {
+  public constructor(element: ElementRef,
+    private ngChartjsService: NgChartjsService,
+    private storeService: StoreService) {
     this.element = element;   // 获取指令所在canvas元素
   }
 
@@ -121,12 +124,19 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
     if (this.chart) {
       this.chart.destroy();
       this.chart = void 0;
+
+      if (this.element.nativeElement.hasAttribute('id')) {
+        this.storeService.removeChart(this.element.nativeElement.id);  // delete chart instance.
+      }
     }
   }
 
   private refresh(): any {
     this.ngOnDestroy();
     this.chart = this.getChartBuilder(this.ctx/*, data, this.options*/);
+    if (this.element.nativeElement.hasAttribute('id')) {
+      this.storeService.addChart(this.element.nativeElement.id, this.chart);
+    }
   }
 
   private addData(labels: any[], data: any[][]) {
@@ -152,7 +162,7 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
     if (direction === 'latest') {
       this.chart.data.labels.pop();
       this.chart.data.datasets.forEach((dataset) => {
-            dataset.data.pop();
+        dataset.data.pop();
       });
       return;
     }
