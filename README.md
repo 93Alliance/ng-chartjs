@@ -295,6 +295,31 @@ View
 ![](http://fly-share-image.oss-cn-beijing.aliyuncs.com/18-11-6/12771005.jpg)
 
 > The parameter of registerPlugin function is an array of objects.
+### Get chart.js instance
+
+Set the id attribute of the element,then Get the chart.js object by id. [see source code](https://github.com/93Alliance/ng-chartjs/tree/master/src/app/reset-option)
+
+`html` file
+
+```
+    <div style="position: relative; width: 600px;">
+      <canvas id="testChart" ngChartjs [datasets]="lineChartData" [labels]="lineChartLabels"
+      [options]="lineChartOptions" [legend]="lineChartLegend" [chartType]="lineChartType" [resetOption]="resetOption"></canvas>
+    </div>
+```
+`ts` file
+
+```
+...
+import { NgChartjsService } from 'ng-chartjs';
+...
+ngInit() {
+    const chart: any = this.ngChartjsService.getChart('testChart');
+    chart.options.scales.xAxes[0].ticks.display = false;
+    chart.update();
+}
+...
+```
 
 ### Properties
 
