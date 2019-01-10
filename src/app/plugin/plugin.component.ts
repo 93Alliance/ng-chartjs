@@ -63,4 +63,13 @@ export class PluginComponent implements OnInit {
 
     this.inlinePlugin = this.textPlugin;
   }
+
+  // events
+  chartClicked(e: any): void {
+    console.log('click', e);
+  }
+
+  chartHovered(e: any): void {
+    console.log('hover', e);
+  }
 }

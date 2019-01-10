@@ -194,11 +194,11 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
     // hock for onHover and onClick events
     options.hover = options.hover || {};
     if (!options.hover.onHover) {
-      options.hover.onHover = (active: any[]) => {
+      options.hover.onHover = (event: any, active: any[]) => {
         if (active && !active.length) {
           return;
         }
-        this.chartHover.emit({ active });
+        this.chartHover.emit({event, active });
       };
     }
 

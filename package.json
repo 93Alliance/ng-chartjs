@@ -26,6 +26,7 @@
     "@angular/router": "^6.1.0",
     "chart.js": "^2.7.3",
     "chartjs-plugin-annotation": "^0.5.7",
+    "chartjs-plugin-piechart-outlabels-compact": "^0.1.3",
     "core-js": "^2.5.4",
     "hammerjs": "^2.0.8",
     "rxjs": "^6.0.0",

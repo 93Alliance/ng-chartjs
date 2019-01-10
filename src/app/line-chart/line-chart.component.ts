@@ -7,8 +7,8 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 })
 export class LineChartComponent implements OnInit {
 
-   // lineChart
-   lineChartData: Array<any> = [
+  // lineChart
+  lineChartData: Array<any> = [
     { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
     { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' },
     { data: [18, 48, 77, 9, 100, 27, 40], label: 'Series C' }
@@ -66,13 +66,21 @@ export class LineChartComponent implements OnInit {
   }
 
   addNewData() {
-    this.updateData = {labels: ['August', 'September'], data: [[10, 30], [50, 58], [47, 49]]};
+    this.updateData = { labels: ['August', 'September'], data: [[10, 30], [50, 58], [47, 49]] };
   }
 
   removeData() {
-    this.removing = {orientation: 'latest'};
+    this.removing = { orientation: 'latest' };
   }
   toggleLegend() {
     this.lineChartLegend = !this.lineChartLegend;
+  }
+  // events
+  chartClicked(e: any): void {
+    console.log('click', e);
+  }
+
+  chartHovered(e: any): void {
+    console.log('hover', e);
   }
 }
