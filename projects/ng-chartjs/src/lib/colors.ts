@@ -28,12 +28,12 @@ export interface Color {
 // Default colors
 export const DefaultColors: number[][] = [
     [63, 81, 181],       // Indogo
+    [255, 152, 0],       // Orange
     [233, 30, 99],       // Pink
     [156, 39, 176],      // Purple
     [0, 188, 212],       // Cyan
     [3, 169, 244],       // Light Blue
     [0, 150, 136],       // Teal
-    [255, 152, 0],       // Orange
     [96, 125, 139],      // Blue Grey
     [255, 193, 7],       // Amber
     [37, 155, 36],       // Green
@@ -47,15 +47,15 @@ export interface Colors extends Color {
     label?: string;
 }
 
-function rgba(colour: number[], alpha: number): string {
+export function rgba(colour: number[], alpha: number): string {
     return 'rgba(' + colour.concat(alpha).join(',') + ')';
 }
 
-function getRandomInt(min: number, max: number): number {
+export function getRandomInt(min: number, max: number): number {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function formatLineColor(colors: number[]): Color {
+export function formatLineColor(colors: number[]): Color {
     return {
         backgroundColor: rgba(colors, 0.4),
         borderColor: rgba(colors, 1),
@@ -66,7 +66,7 @@ function formatLineColor(colors: number[]): Color {
     };
 }
 
-function formatBarColor(colors: number[]): Color {
+export function formatBarColor(colors: number[]): Color {
     return {
         backgroundColor: rgba(colors, 0.6),
         borderColor: rgba(colors, 1),
@@ -75,7 +75,7 @@ function formatBarColor(colors: number[]): Color {
     };
 }
 
-function formatPieColors(colors: number[][]): Colors {
+export function formatPieColors(colors: number[][]): Colors {
     return {
         backgroundColor: colors.map((color: number[]) => rgba(color, 0.6)),
         borderColor: colors.map(() => '#fff'),
@@ -86,7 +86,7 @@ function formatPieColors(colors: number[][]): Colors {
     };
 }
 
-function formatPolarAreaColors(colors: number[][]): Color {
+export function formatPolarAreaColors(colors: number[][]): Color {
     return {
         backgroundColor: colors.map((color: number[]) => rgba(color, 0.6)),
         borderColor: colors.map((color: number[]) => rgba(color, 1)),
@@ -95,18 +95,35 @@ function formatPolarAreaColors(colors: number[][]): Color {
     };
 }
 
-function getRandomColor(): number[] {
+export function getRandomColor(): number[] {
     return [getRandomInt(0, 255), getRandomInt(0, 255), getRandomInt(0, 255)];
 }
 
-// Generate colors for line|bar charts
-function generateColor(index: number): number[] {
+
+/**
+* @method Generate colors for line|bar charts
+* @param index he index of the default color array. eg. 0, 1
+* @return number[]
+* @author vincent 2019-01-22
+* @version 0.0.0
+* @example
+* @log 1. vincent,2019-01-22,done
+*/
+export function generateColor(index: number): number[] {
     return DefaultColors[index] || getRandomColor();
 }
 
 
-// Generate colors for pie|doughnut charts
-function generateColors(count: number): number[][] {
+/**
+* @method Generate colors for pie|doughnut charts
+* @param count Length of data. eg. datasets.data.length
+* @return number[][]
+* @author vincent 2019-01-22
+* @version 0.0.0
+* @example
+* @log 1. vincent,2019-01-22,done
+*/
+export function generateColors(count: number): number[][] {
     const colorsArr: number[][] = new Array(count);
     for (let i = 0; i < count; i++) {
         colorsArr[i] = DefaultColors[i] || getRandomColor();
@@ -114,7 +131,18 @@ function generateColors(count: number): number[][] {
     return colorsArr;
 }
 
-// Generate colors by chart type
+
+/**
+* @method Generate colors by chart type
+* @param chartType The type of chart you are using. eg. line,bar
+* @param index The index of the default color array. eg. DefaultColors[index]
+* @param count Length of data. eg. datasets.data.length
+* @return Color or number[]
+* @author vincent 2019-01-22
+* @version 0.0.0
+* @example
+* @log 1. vincent,2019-01-22,done
+*/
 export function getColors(chartType: string, index: number, count: number): Color | number[] {
     if (chartType === 'pie' || chartType === 'doughnut') {
         return formatPieColors(generateColors(count));

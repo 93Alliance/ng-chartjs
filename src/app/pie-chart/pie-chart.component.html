@@ -1,5 +1,5 @@
 <div style="width: 600px; text-align: center;margin-top:20px">
   <div>Pie Chart</div>
-  <canvas ngChartjs [data]="pieChartData" [labels]="pieChartLabels"
+  <canvas ngChartjs [data]="pieChartData" [labels]="pieChartLabels" [colors]="pieColors"
     [chartType]="pieChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
 </div>

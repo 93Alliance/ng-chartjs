@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build --prod --base-href '/ng-chartjs/'",
+    "release": "ng build --prod",
     "build:lib": "ng build --prod ng-chartjs",
     "deploy": "ngh --dir=dist/ngx-lite-chartjs",
     "test": "ng test",

@@ -46,7 +46,6 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
 
   public ctx: any;
   public chart: any;
-  private cvs: any;
   private initFlag = false;
   private hasChanges = false;
 
@@ -60,7 +59,6 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
 
   ngOnInit() {
     this.ctx = this.element.nativeElement.getContext('2d'); // 获取元素的ctx
-    this.cvs = this.element.nativeElement;  // 获取这个元素
     this.initFlag = true; // 是否初始化了的标志
 
     if (this.data || this.datasets) { // 判断data和datasets有一个有数据就刷新
@@ -198,7 +196,7 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
         if (active && !active.length) {
           return;
         }
-        this.chartHover.emit({event, active });
+        this.chartHover.emit({ event, active });
       };
     }
 
@@ -235,18 +233,17 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
       }
     }
 
-    if (this.datasets && this.datasets.length ||
-      (datasets && datasets.length)) {
-      datasets = (this.datasets || datasets)
-        .map((elm: number, index: number) => {
-          const newElm: any = Object.assign({}, elm);
-          if (this.colors && this.colors.length) {
-            Object.assign(newElm, this.colors[index]);
-          } else {
-            Object.assign(newElm, getColors(this.chartType, index, newElm.data.length));
-          }
-          return newElm;
-        });
+    if (this.datasets && this.datasets.length || (datasets && datasets.length)) {
+      // fix elm type, pre type is number
+      datasets = (this.datasets || datasets).map((elm: any, index: number) => {
+        const newElm: any = Object.assign({}, elm);
+        if (this.colors && this.colors.length) {
+          Object.assign(newElm, this.colors[index]);
+        } else {
+          Object.assign(newElm, getColors(this.chartType, index, newElm.data.length));
+        }
+        return newElm;
+      });
     }
 
     if (!datasets) {

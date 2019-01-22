@@ -321,6 +321,12 @@ ngInit() {
 ...
 ```
 
+### Get random color
+
+```
+import { getColors } from 'ng-chartjs';
+```
+> generateColor, generateColors...
 ### Properties
 
 Property  | Type | Explanation
