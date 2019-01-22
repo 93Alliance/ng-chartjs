@@ -75,6 +75,7 @@ export class ResetOptionComponent implements OnInit {
   }
   getChartInstance() {
     const chart: any = this.ngChartjsService.getChart('testChart');
+    console.log(chart);
     chart.options.scales.xAxes[0].ticks.display = false;
     chart.update();
   }
