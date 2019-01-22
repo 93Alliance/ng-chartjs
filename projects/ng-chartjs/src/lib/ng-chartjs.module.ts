@@ -1,7 +1,7 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { NgChartjsDirective } from './ng-chartjs.directive';
 import { NgChartjsDefaultPluginToken, NgChartjsCustomPluginToken } from './plugin-token';
-import { PluginConfig } from './pluginsConfig';
+import { PluginConfig } from './plugins-config';
 
 
 export function ngChartjsCustomPluginsFactory(plugins: any[]): PluginConfig {
