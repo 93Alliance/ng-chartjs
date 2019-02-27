@@ -18,6 +18,7 @@ import { DoughnutChartComponent } from './doughnut-chart/doughnut-chart.componen
 import { RadarChartComponent } from './radar-chart/radar-chart.component';
 import { PolarChartComponent } from './polar-chart/polar-chart.component';
 import { ResetOptionComponent } from './reset-option/reset-option.component';
+import { ChartTypeComponent } from './chart-type/chart-type.component';
 
 const chartAnnotation = ChartAnnotation;
 // const piechartOutlabels = PiechartOutlabels;
@@ -81,7 +82,8 @@ const horizonalLinePlugin = {
     DoughnutChartComponent,
     RadarChartComponent,
     PolarChartComponent,
-    ResetOptionComponent
+    ResetOptionComponent,
+    ChartTypeComponent
   ],
   imports: [
     BrowserModule,
