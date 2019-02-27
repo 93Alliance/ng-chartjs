@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { NgChartjsService } from './../../../projects/ng-chartjs/src/lib/ng-chartjs.service';
+
 @Component({
   selector: 'app-chart-type',
   templateUrl: './chart-type.component.html',
@@ -28,7 +30,7 @@ export class ChartTypeComponent implements OnInit {
   public lineChartLegend = true;
   public chartType = 'line';
 
-  constructor() { }
+  constructor(private ngChartjsService: NgChartjsService) { }
 
   ngOnInit() {
   }
@@ -42,5 +44,7 @@ export class ChartTypeComponent implements OnInit {
       }
     ];
     this.lineChartLabels = ['newlabel1', 'newlabel2', 'newlabel3'];
+    const chart: any = this.ngChartjsService.getChart('testChartType');
+    console.log(chart);
   }
 }
