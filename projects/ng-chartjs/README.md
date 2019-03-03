@@ -1,5 +1,7 @@
-# ng-chartjs
+# ng-chartjs [![npm version](https://badge.fury.io/js/ng-chartjs.svg)](https://badge.fury.io/js/ng-chartjs)
 A fully functional Angular2+ chart.js library.This chart library based on `ng2-charts`.
+
+[![NPM](https://nodei.co/npm/ng-chartjs.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/ng-chartjs/)
 
 > Thanks to valor-software's [ng2-charts](https://github.com/valor-software/ng2-charts).
 
@@ -321,6 +323,12 @@ ngInit() {
 ...
 ```
 
+### Get random color
+
+```
+import { getColors } from 'ng-chartjs';
+```
+> generateColor, generateColors...
 ### Properties
 
 Property  | Type | Explanation
