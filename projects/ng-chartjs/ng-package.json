@@ -3,6 +3,9 @@
   "dest": "../../dist/ng-chartjs",
   "deleteDestPath": false,
   "lib": {
-    "entryFile": "src/public_api.ts"
+    "entryFile": "src/public_api.ts",
+    "umdModuleIds": {
+      "chart.js": "chart_js"
+    }
   }
 }
