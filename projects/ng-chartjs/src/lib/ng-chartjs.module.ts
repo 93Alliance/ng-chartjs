@@ -2,6 +2,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { NgChartjsDirective } from './ng-chartjs.directive';
 import { NgChartjsDefaultPluginToken, NgChartjsCustomPluginToken } from './plugin-token';
 import { PluginConfig } from './plugins-config';
+import { NgChartjsService } from './ng-chartjs.service';
 
 
 export function ngChartjsCustomPluginsFactory(plugins: any[]): PluginConfig {
@@ -19,10 +20,7 @@ export function ngChartjsDefaultPluginsFactory(): PluginConfig {
   declarations: [NgChartjsDirective],
   exports: [NgChartjsDirective],
   providers: [
-    {
-      provide: NgChartjsCustomPluginToken,
-      useFactory: ngChartjsDefaultPluginsFactory
-    }
+     NgChartjsService,
   ]
 })
 export class NgChartjsModule {
