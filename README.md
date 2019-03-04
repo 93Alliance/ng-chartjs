@@ -5,9 +5,9 @@ A fully functional Angular2+ chart.js library.This chart library based on `ng2-c
 
 > Thanks to valor-software's [ng2-charts](https://github.com/valor-software/ng2-charts).
 
-## Demo
+## Usage & Demo
 
-[Demo](https://93alliance.github.io/ng-chartjs/ng-chartjs/)
+[Demo](https://stackblitz.com/edit/angular-7eudux)
 
 ## Installation
 
