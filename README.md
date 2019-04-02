@@ -1,4 +1,5 @@
-# ng-chartjs [![npm version](https://badge.fury.io/js/ng-chartjs.svg)](https://badge.fury.io/js/ng-chartjs)
+# ng-chartjs [![npm version](https://badge.fury.io/js/ng-chartjs.svg)](https://badge.fury.io/js/ng-chartjs) [![LICENSE](https://img.shields.io/badge/license-Anti%20996-blue.svg)](https://github.com/996icu/996.ICU/blob/master/LICENSE)
+
 A fully functional Angular2+ chart.js library.This chart library based on `ng2-charts`.
 
 [![NPM](https://nodei.co/npm/ng-chartjs.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/ng-chartjs/)
