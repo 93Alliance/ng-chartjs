@@ -111,10 +111,7 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
         Object.assign(this.chart.options, changes.resetOption.currentValue);
         this.hasChanges = true;
       }
-      // else {
-      //   // otherwise rebuild the chart
-      //   this.refresh();
-      // }
+
       if (this.hasChanges) {
         this.chart.update();
         this.hasChanges = false;
