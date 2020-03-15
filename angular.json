@@ -13,6 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "outputPath": "dist/ngx-lite-chartjs",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -30,6 +31,12 @@
           },
           "configurations": {
             "production": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -94,6 +101,10 @@
               "**/node_modules/**"
             ]
           }
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy",
+          "options": {}
         }
       }
     },
@@ -138,7 +149,8 @@
           },
           "configurations": {
             "production": {
-              "project": "projects/ng-chartjs/ng-package.prod.json"
+              "project": "projects/ng-chartjs/ng-package.prod.json",
+              "tsConfig": "projects/ng-chartjs/tsconfig.lib.prod.json"
             }
           }
         },
@@ -165,5 +177,8 @@
       }
     }
   },
-  "defaultProject": "ngx-lite-chartjs"
+  "defaultProject": "ngx-lite-chartjs",
+  "cli": {
+    "analytics": false
+  }
 }

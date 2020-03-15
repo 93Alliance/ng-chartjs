@@ -15,9 +15,9 @@ export class PieChartComponent implements OnInit {
   pieColors = [
     {
       'backgroundColor': [
-        'rgba(63,81,181,0.6)',
-        'rgba(233,30,99,0.6)',
-        'rgba(156,39,176,0.6)'
+        'rgba(63,81,181,0.75)',
+        'rgba(0,150,136,0.75)',
+        'rgba(255,152,0,0.75)'
       ],
       'borderColor': [
         '#fff',
@@ -26,8 +26,8 @@ export class PieChartComponent implements OnInit {
       ],
       'pointBackgroundColor': [
         'rgba(63,81,181,1)',
-        'rgba(233,30,99,1)',
-        'rgba(156,39,176,1)'
+        'rgba(0,150,136,1)',
+        'rgba(255,152,0,1)'
       ],
       'pointBorderColor': [
         '#fff',
@@ -36,13 +36,13 @@ export class PieChartComponent implements OnInit {
       ],
       'pointHoverBackgroundColor': [
         'rgba(63,81,181,1)',
-        'rgba(233,30,99,1)',
-        'rgba(156,39,176,1)'
+        'rgba(0,150,136,1)',
+        'rgba(1255,152,0,1)'
       ],
       'pointHoverBorderColor': [
         'rgba(63,81,181,1)',
-        'rgba(233,30,99,1)',
-        'rgba(156,39,176,1)'
+        'rgba(0,150,136,1)',
+        'rgba(255,152,0,1)'
       ]
     }
   ];
@@ -52,7 +52,7 @@ export class PieChartComponent implements OnInit {
   }
 
   public chartHovered(e: any): void {
-    console.log(e);
+    // console.log(e);
   }
   ngOnInit() {
   }

@@ -44,8 +44,8 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
   // 鼠标悬浮在标签或者活跃的点上面时
   @Output() chartHover: EventEmitter<any> = new EventEmitter();
 
-  public ctx: any;
-  public chart: any;
+  private ctx: any;
+  private chart_: any;
   private initFlag = false;
   private hasChanges = false;
 
@@ -80,13 +80,13 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
       }
 
       if (changes.hasOwnProperty('labels')) {
-        this.chart.data.labels = changes.labels.currentValue;
+        this.chart_.data.labels = changes.labels.currentValue;
         this.hasChanges = true;
       }
 
       if (changes.hasOwnProperty('legend')) {
         if (changes.legend.currentValue !== changes.legend.previousValue) {
-          this.chart.options.legend.display = changes.legend.currentValue;
+          this.chart_.options.legend.display = changes.legend.currentValue;
           this.hasChanges = true;
         }
       }
@@ -108,21 +108,21 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
       }
 
       if (changes.hasOwnProperty('resetOption')) {
-        Object.assign(this.chart.options, changes.resetOption.currentValue);
+        Object.assign(this.chart_.options, changes.resetOption.currentValue);
         this.hasChanges = true;
       }
 
       if (this.hasChanges) {
-        this.chart.update();
+        this.chart_.update();
         this.hasChanges = false;
       }
     }
   }
 
   ngOnDestroy() {
-    if (this.chart) {
-      this.chart.destroy();
-      this.chart = void 0;
+    if (this.chart_) {
+      this.chart_.destroy();
+      this.chart_ = void 0;
 
       if (this.element.nativeElement.hasAttribute('id')) {
         this.storeService.removeChart(this.element.nativeElement.id);  // delete chart instance.
@@ -130,22 +130,16 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
     }
   }
 
-  private refresh(): any {
-    this.ngOnDestroy();
-    this.chart = this.getChartBuilder(this.ctx/*, data, this.options*/);
-    if (this.element.nativeElement.hasAttribute('id')) {
-      this.storeService.addChart(this.element.nativeElement.id, this.chart);
-    }
-  }
+  get chart() { return this.chart_; }
 
-  private addData(labels: any[], data: any[][]) {
+  addData(labels: any[], data: any[][]) {
     if (labels.length === 0 || data.length === 0) {
       return;
     }
     // update labels
-    labels.forEach((label) => { this.chart.data.labels.push(label); });
+    labels.forEach((label) => { this.chart_.data.labels.push(label); });
 
-    this.chart.data.datasets.forEach((dataset, index) => {
+    this.chart_.data.datasets.forEach((dataset, index) => {
       if (data[index]) {
         for (let i = 0; i < data[index].length; i++) {
           dataset.data.push(data[index][i]);
@@ -157,21 +151,32 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
     });
   }
   // direction is 'ildest' or 'latest'
-  private removeData(direction: string) {
+  removeData(direction: string) {
+    // fix: support to oldest feature
     if (direction === 'latest') {
-      this.chart.data.labels.pop();
-      this.chart.data.datasets.forEach((dataset) => {
+      this.chart_.data.labels.pop();
+      this.chart_.data.datasets.forEach((dataset: any) => {
         dataset.data.pop();
       });
-      return;
-    }
-    if (direction === 'oldest') {
-      return;
+    } else if (direction === 'oldest') {
+      this.chart_.data.labels.shift();
+      this.chart_.data.datasets.forEach((dataset: any) => {
+        dataset.data.shift();
+      });
     }
   }
+
+  private refresh(): any {
+    this.ngOnDestroy();
+    this.chart_ = this.getChartBuilder(this.ctx/*, data, this.options*/);
+    if (this.element.nativeElement.hasAttribute('id')) {
+      this.storeService.addChart(this.element.nativeElement.id, this.chart_);
+    }
+  }
+
   private updateChartData(newDataValues: number[] | any[]): void {
     if (Array.isArray(newDataValues[0].data)) {
-      this.chart.data.datasets.forEach((dataset: any, i: number) => {
+      this.chart_.data.datasets.forEach((dataset: any, i: number) => {
         dataset.data = newDataValues[i].data;
 
         if (newDataValues[i].label) {
@@ -179,11 +184,11 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
         }
       });
     } else {
-      this.chart.data.datasets[0].data = newDataValues;
+      this.chart_.data.datasets[0].data = newDataValues;
     }
   }
 
-  getChartBuilder(ctx: any/*, data:Array<any>, options:any*/): any {
+  private getChartBuilder(ctx: any/*, data:Array<any>, options:any*/): any {
     const datasets: any = this.getDatasets();
 
     const options: any = Object.assign({}, this.options); // 深复制options
@@ -248,7 +253,7 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
     }
 
     if (!datasets) {
-      throw new Error(`ng-charts configuration error,
+      throw new Error(`ng-chartjs configuration error,
       data or datasets field are required to render char ${this.chartType}`);
     }
 

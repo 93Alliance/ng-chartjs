@@ -70,6 +70,6 @@ export class PluginComponent implements OnInit {
   }
 
   chartHovered(e: any): void {
-    console.log('hover', e);
+    // console.log('hover', e);
   }
 }

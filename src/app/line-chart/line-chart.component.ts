@@ -19,29 +19,29 @@ export class LineChartComponent implements OnInit {
     responsive: true
   };
   lineChartColors: Array<any> = [
-    { // grey
-      backgroundColor: 'rgba(148,159,177,0.2)',
-      borderColor: 'rgba(148,159,177,1)',
-      pointBackgroundColor: 'rgba(148,159,177,1)',
+    {
+      backgroundColor: 'rgba(63,81,181,0.35)',
+      borderColor: 'rgba(63,81,181,1)',
+      pointBackgroundColor: 'rgba(63,81,181,1)',
       pointBorderColor: '#fff',
       pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+      pointHoverBorderColor: 'rgba(63,81,181,0.95)'
     },
-    { // dark grey
-      backgroundColor: 'rgba(77,83,96,0.2)',
-      borderColor: 'rgba(77,83,96,1)',
-      pointBackgroundColor: 'rgba(77,83,96,1)',
+    {
+      backgroundColor: 'rgba(0,150,136,0.35)',
+      borderColor: 'rgba(0,150,136,1)',
+      pointBackgroundColor: 'rgba(0,150,136,1)',
       pointBorderColor: '#fff',
       pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(77,83,96,1)'
+      pointHoverBorderColor: 'rgba(0,150,136,0.95)'
     },
-    { // grey
-      backgroundColor: 'rgba(148,159,177,0.2)',
-      borderColor: 'rgba(148,159,177,1)',
-      pointBackgroundColor: 'rgba(148,159,177,1)',
+    {
+      backgroundColor: 'rgba(255,152,0,0.35)',
+      borderColor: 'rgba(255,152,0,1)',
+      pointBackgroundColor: 'rgba(255,152,0,1)',
       pointBorderColor: '#fff',
       pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+      pointHoverBorderColor: 'rgba(255,152,0,0.95)'
     }
   ];
   public lineChartLegend = true;
@@ -81,6 +81,6 @@ export class LineChartComponent implements OnInit {
   }
 
   chartHovered(e: any): void {
-    console.log('hover', e);
+    // console.log('hover', e);
   }
 }

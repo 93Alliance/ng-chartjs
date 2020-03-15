@@ -28,7 +28,7 @@ export class NgChartjsModule {
    * Register a plugin.
    * @param plugin
    */
-  public static registerPlugin(plugins: any[] = []): ModuleWithProviders {
+  public static registerPlugin(plugins: any[] = []): ModuleWithProviders<NgChartjsModule> {
     return {
       ngModule: NgChartjsModule,
       providers: [
