@@ -1,10 +1,9 @@
-export class PluginConfig {
-    private _plugins: any[];
-    constructor(plugins: any[] = []) {
-        this._plugins = plugins;
-    }
+import { Injectable } from '@angular/core';
 
-    get plugins() {
-        return this._plugins;
-    }
+@Injectable({
+    providedIn: 'root'
+})
+export class PluginConfig {
+    plugins: any[] = [];
 }
+

@@ -149,7 +149,6 @@
           },
           "configurations": {
             "production": {
-              "project": "projects/ng-chartjs/ng-package.prod.json",
               "tsConfig": "projects/ng-chartjs/tsconfig.lib.prod.json"
             }
           }

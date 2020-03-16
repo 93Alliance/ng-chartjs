@@ -146,7 +146,6 @@ export function generateColors(count: number): number[][] {
 export function getColors(chartType: string, index: number, count: number): Color | number[] {
     if (chartType === 'pie' || chartType === 'doughnut') {
         const color = formatPieColors(generateColors(count));
-        console.log(color);
         return color;
     }
 

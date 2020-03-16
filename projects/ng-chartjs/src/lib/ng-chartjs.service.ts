@@ -9,15 +9,14 @@ import { StoreService } from './store.service';
 })
 export class NgChartjsService {
 
-    private plugins: any[];
-
-    constructor(@Inject(forwardRef(() => NgChartjsCustomPluginToken)) private pluginConfig: PluginConfig,
-    private storeService: StoreService) {
-      this.plugins = pluginConfig.plugins;
-      if (this.plugins.length !== 0 || this.plugins) {
-        for (let i = 0; i < this.plugins.length; i++) {
-          if (this.plugins[i]) {
-            Chart.plugins.register(this.plugins[i]);
+    constructor(
+      private storeService: StoreService,
+      private pluginConfig: PluginConfig) {
+      const plugins = pluginConfig.plugins;
+      if (plugins.length !== 0 || plugins) {
+        for (let i = 0; i < plugins.length; i++) {
+          if (plugins[i]) {
+            Chart.plugins.register(plugins[i]);
           }
         }
       }
