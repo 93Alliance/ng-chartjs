@@ -19,6 +19,7 @@ npm install ng-chartjs --save
 2.You need to install Chart.js library in application.
 ```
 npm install chart.js --save
+npm install @types/chart.js -D
 ```
 ## Usage
 
@@ -45,6 +46,7 @@ imports: [
    NgChartjsModule.registerPlugin([...])
 ]
 ```
+
 ### Chart types
 
 - line
@@ -70,7 +72,9 @@ eg. [source code](https://github.com/93Alliance/ng-chartjs/tree/master/src/app/p
 
 ```
 ...
-lineChartData: Array<any> = [
+import { Chart } from 'chart.js';
+
+lineChartData: Chart.ChartDataSets[] = [
     {
       label: 'My First dataset',
       fill: false,
