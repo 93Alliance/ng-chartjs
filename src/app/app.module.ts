@@ -1,3 +1,5 @@
+import { AppRoutingModule } from './app-routing.module';
+import { NgChartjsDirective } from './../../projects/ng-chartjs/src/lib/ng-chartjs.directive';
 // import { NgChartjsModule } from './../../projects/ng-chartjs/src/lib/ng-chartjs.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -84,13 +86,15 @@ const horizonalLinePlugin = {
     RadarChartComponent,
     PolarChartComponent,
     ResetOptionComponent,
-    ChartTypeComponent
+    ChartTypeComponent,
+    NgChartjsDirective
   ],
   imports: [
     BrowserModule,
     NgChartjsModule.registerPlugin([horizonalLinePlugin, chartAnnotation]),
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

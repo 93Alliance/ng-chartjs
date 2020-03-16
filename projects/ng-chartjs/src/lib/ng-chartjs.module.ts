@@ -17,11 +17,6 @@ export function ngChartjsCustomPluginsFactory(plugins: any[]): PluginConfig {
   providers: [NgChartjsService]
 })
 export class NgChartjsModule {
-  constructor(@Optional() @SkipSelf() ngChartjsModule: NgChartjsModule) {
-    if (ngChartjsModule) {
-      throw new TypeError(`NgChartjsModule is imported twice.`);
-    }
-  }
   /**
    * Register a plugin.
    * @param plugin
@@ -41,11 +36,5 @@ export class NgChartjsModule {
         }
       ]
     };
-  }
-  /**
-   * Lazy module
-   */
-  public static forChild(): ModuleWithProviders<NgChartjsModule> {
-    return { ngModule: NgChartjsModule };
   }
 }
