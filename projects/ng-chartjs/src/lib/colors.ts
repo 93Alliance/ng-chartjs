@@ -144,9 +144,11 @@ export function generateColors(count: number): number[][] {
 * @log 1. vincent,2019-01-22,done
 */
 export function getColors(chartType: string, index: number, count: number): Color | number[] {
-    if (chartType === 'pie' || chartType === 'doughnut') {
-        const color = formatPieColors(generateColors(count));
-        return color;
+    if (chartType === 'pie' ||
+        chartType === 'doughnut' ||
+        chartType === 'bubble' ||
+        chartType === 'scatter') {
+        return formatPieColors(generateColors(count));
     }
 
     if (chartType === 'polarArea') {
@@ -160,5 +162,6 @@ export function getColors(chartType: string, index: number, count: number): Colo
     if (chartType === 'bar' || chartType === 'horizontalBar') {
         return formatBarColor(generateColor(index));
     }
+
     return generateColor(index);
 }

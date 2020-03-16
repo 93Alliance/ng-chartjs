@@ -1,3 +1,4 @@
+import { NgChartjsDirective } from './../../../projects/ng-chartjs/src/lib/ng-chartjs.directive';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 @Component({
@@ -49,6 +50,8 @@ export class LineChartComponent implements OnInit {
   updateData: any;
   isUpdate: boolean;
   removing: any;
+  @ViewChild('ngChartjs', {static: true})
+  private readonly ngChartjs: NgChartjsDirective;
   constructor() { }
 
   ngOnInit() {
@@ -75,6 +78,7 @@ export class LineChartComponent implements OnInit {
   toggleLegend() {
     this.lineChartLegend = !this.lineChartLegend;
   }
+
   // events
   chartClicked(e: any): void {
     console.log('click', e);

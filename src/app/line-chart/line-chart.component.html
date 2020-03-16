@@ -1,8 +1,8 @@
 <!-- 1.line chart -->
 
 <div style="width: 600px; text-align: center;margin-top:20px">
-  <div>Multi Line Plugin</div>
-  <canvas *ngIf="true" ngChartjs [datasets]="lineChartData" [labels]="lineChartLabels"
+  <div>Ng-Chartjs</div>
+  <canvas #ngChartjs="ngChartjs" ngChartjs [datasets]="lineChartData" [labels]="lineChartLabels"
     [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend"
     [chartType]="lineChartType" [adding]="updateData" [removing]="removing"
     (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>

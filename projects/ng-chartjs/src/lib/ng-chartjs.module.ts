@@ -11,13 +11,10 @@ export function ngChartjsCustomPluginsFactory(plugins: any[]): PluginConfig {
 }
 
 @NgModule({
-  imports: [
-  ],
+  imports: [],
   declarations: [NgChartjsDirective],
   exports: [NgChartjsDirective],
-  providers: [
-    NgChartjsService,
-  ]
+  providers: [NgChartjsService]
 })
 export class NgChartjsModule {
   constructor(@Optional() @SkipSelf() ngChartjsModule: NgChartjsModule) {

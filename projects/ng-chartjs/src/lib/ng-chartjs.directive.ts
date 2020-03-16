@@ -1,3 +1,4 @@
+
 import { StoreService } from './store.service';
 import {
   OnDestroy,
@@ -13,39 +14,44 @@ import {
 import { Chart } from 'chart.js';
 
 import { NgChartjsService } from './ng-chartjs.service';
-import { getColors } from './colors';
+import { getColors, Colors } from './colors';
+
+export type Labels = Array<string | string[] | number | number[] | Date | Date[] | any | any[]>;
+export type Orientation = 'oldest' | 'latest';
+export interface NgChartjsEvent { event: MouseEvent; active: Array<{}>; }
+
 /* tslint:disable-next-line */
-@Directive({ selector: 'canvas[ngChartjs]', exportAs: 'ng-chart-js' })
+@Directive({ selector: 'canvas[ngChartjs]', exportAs: 'ngChartjs' })
 export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
 
   // 图表的点集，它应该是数组<number []>仅用于线，条和雷达，否则数字[];
   @Input() data: number[] | any[];
   // 相当于chart.js内 data: {datasets: [{...}]}
-  @Input() datasets: any[];
+  @Input() datasets: Chart.ChartDataSets[];
   // x轴标签。这对图表来说是必要的：线，条和雷达。并且只是图表的标签（悬停）：polarArea，pie和doughnut
-  @Input() labels: any[] = [];
+  @Input() labels: Labels = [];
   // 相当于chart.js的option
-  @Input() options: any = {};
+  @Input() options: Chart.ChartOptions = {};
   // 内联插件属性
   @Input() inlinePlugins: any[];
   // chartType line, bar, radar, pie, polarArea, doughnut
-  @Input() chartType: string;
+  @Input() chartType: Chart.ChartType;
   // 数据颜色，如果没有指定，将使用默认和|或随机颜色
-  @Input() colors: any[];
+  @Input() colors: Colors[];
   // 是否显示图例
   @Input() legend: boolean;
 
-  @Input() adding: { labels: any[], data: any[][] };
-  @Input() removing: { orientation: string };  // orientation is 'oldest' or 'latest
-  @Input() resetOption: any;
+  @Input() adding: { labels: Labels[], data: any[][] };
+  @Input() removing: { orientation: Orientation };  // orientation is 'oldest' or 'latest
+  @Input() resetOption: Chart.ChartType;
 
   // 鼠标点击图表所有的区域
-  @Output() chartClick: EventEmitter<any> = new EventEmitter();
+  @Output() chartClick: EventEmitter<NgChartjsEvent> = new EventEmitter();
   // 鼠标悬浮在标签或者活跃的点上面时
-  @Output() chartHover: EventEmitter<any> = new EventEmitter();
+  @Output() chartHover: EventEmitter<NgChartjsEvent> = new EventEmitter();
 
-  private ctx: any;
-  private chart_: any;
+  private ctx: CanvasRenderingContext2D;
+  private chart_: Chart;
   private initFlag = false;
   private hasChanges = false;
 
@@ -92,13 +98,13 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
       }
 
       if (changes.hasOwnProperty('adding')) {
-        this.addData(changes.adding.currentValue.labels, changes.adding.currentValue.data);
+        this.addData_(changes.adding.currentValue.labels, changes.adding.currentValue.data);
         this.hasChanges = true;
       }
 
       if (changes.hasOwnProperty('removing')) {
         if (changes.removing.currentValue.orientation === 'oldest' || changes.removing.currentValue.orientation === 'latest') {
-          this.removeData(changes.removing.currentValue.orientation);
+          this.removeData_(changes.removing.currentValue.orientation);
           this.hasChanges = true;
         }
       }
@@ -130,40 +136,23 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
     }
   }
 
+  // get Chartjs object
   get chart() { return this.chart_; }
 
-  addData(labels: any[], data: any[][]) {
-    if (labels.length === 0 || data.length === 0) {
-      return;
-    }
-    // update labels
-    labels.forEach((label) => { this.chart_.data.labels.push(label); });
-
-    this.chart_.data.datasets.forEach((dataset, index) => {
-      if (data[index]) {
-        for (let i = 0; i < data[index].length; i++) {
-          dataset.data.push(data[index][i]);
-        }
-      } else {
-        console.log('The added data does not match the original data');
-        return;
-      }
-    });
+  // update chartjs
+  update(): void {
+    this.chart_.update();
   }
-  // direction is 'ildest' or 'latest'
-  removeData(direction: string) {
-    // fix: support to oldest feature
-    if (direction === 'latest') {
-      this.chart_.data.labels.pop();
-      this.chart_.data.datasets.forEach((dataset: any) => {
-        dataset.data.pop();
-      });
-    } else if (direction === 'oldest') {
-      this.chart_.data.labels.shift();
-      this.chart_.data.datasets.forEach((dataset: any) => {
-        dataset.data.shift();
-      });
-    }
+
+  // Dynamic add data
+  addData(labels: Labels[], data: any[][]) {
+    this.addData_(labels, data);
+    this.update();
+  }
+  // Dynamic remove data, orientation is 'ildest' or 'latest'
+  removeData(orientation: Orientation) {
+    this.removeData_(orientation);
+    this.update();
   }
 
   private refresh(): any {
@@ -176,7 +165,7 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
 
   private updateChartData(newDataValues: number[] | any[]): void {
     if (Array.isArray(newDataValues[0].data)) {
-      this.chart_.data.datasets.forEach((dataset: any, i: number) => {
+      this.chart_.data.datasets.forEach((dataset: Chart.ChartDataSets, i: number) => {
         dataset.data = newDataValues[i].data;
 
         if (newDataValues[i].label) {
@@ -188,17 +177,17 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
     }
   }
 
-  private getChartBuilder(ctx: any/*, data:Array<any>, options:any*/): any {
-    const datasets: any = this.getDatasets();
+  private getChartBuilder(ctx: CanvasRenderingContext2D/*, data:Array<any>, options:any*/): any {
+    const datasets = this.getDatasets();
 
-    const options: any = Object.assign({}, this.options); // 深复制options
+    const options: Chart.ChartOptions = Object.assign({}, this.options); // 深复制options
     if (this.legend === false) {  // 设置options的legend TODO: 后续这个属性去除，直接在options内设置
       options.legend = { display: false };
     }
     // hock for onHover and onClick events
     options.hover = options.hover || {};
     if (!options.hover.onHover) {
-      options.hover.onHover = (event: any, active: any[]) => {
+      options.hover.onHover = (event: MouseEvent, active: Array<{}>) => {
         if (active && !active.length) {
           return;
         }
@@ -207,7 +196,7 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
     }
 
     if (!options.onClick) {
-      options.onClick = (event: any, active: any[]) => {
+      options.onClick = (event: MouseEvent, active: Array<{}>) => {
         this.chartClick.emit({ event, active });
       };
     }
@@ -226,8 +215,8 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
   }
 
   // 获取 chart.js的datasets数据
-  private getDatasets(): any {
-    let datasets: any = void 0;
+  private getDatasets(): Chart.ChartDataSets[] {
+    let datasets: Chart.ChartDataSets[] = void 0;
     // in case if datasets is not provided, but data is present
     if (!this.datasets || !this.datasets.length && (this.data && this.data.length)) {
       if (Array.isArray(this.data[0])) {
@@ -241,8 +230,8 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
 
     if (this.datasets && this.datasets.length || (datasets && datasets.length)) {
       // fix elm type, pre type is number
-      datasets = (this.datasets || datasets).map((elm: any, index: number) => {
-        const newElm: any = Object.assign({}, elm);
+      datasets = (this.datasets || datasets).map((elm: Chart.ChartDataSets, index: number) => {
+        const newElm: Chart.ChartDataSets = Object.assign({}, elm);
         if (this.colors && this.colors.length) {
           Object.assign(newElm, this.colors[index]);
         } else {
@@ -258,5 +247,39 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
     }
 
     return datasets;
+  }
+
+  private addData_(labels: Labels[], data: any[][]): void {
+    if (labels.length === 0 || data.length === 0) {
+      return;
+    }
+    // update labels
+    labels.forEach((label) => { this.chart_.data.labels.push(label); });
+
+    this.chart_.data.datasets.forEach((dataset, index) => {
+      if (data[index]) {
+        for (let i = 0; i < data[index].length; i++) {
+          dataset.data.push(data[index][i]);
+        }
+      } else {
+        console.log('The added data does not match the original data');
+        return;
+      }
+    });
+  }
+
+  private removeData_(orientation: Orientation): void {
+    // fix: support to oldest feature
+    if (orientation === 'latest') {
+      this.chart_.data.labels.pop();
+      this.chart_.data.datasets.forEach((dataset: Chart.ChartDataSets) => {
+        dataset.data.pop();
+      });
+    } else if (orientation === 'oldest') {
+      this.chart_.data.labels.shift();
+      this.chart_.data.datasets.forEach((dataset: Chart.ChartDataSets) => {
+        dataset.data.shift();
+      });
+    }
   }
 }
