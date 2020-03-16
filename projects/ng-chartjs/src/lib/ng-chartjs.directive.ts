@@ -1,5 +1,3 @@
-
-import { StoreService } from './store.service';
 import {
   OnDestroy,
   OnInit,
@@ -11,8 +9,8 @@ import {
   SimpleChanges,
   Directive
 } from '@angular/core';
-import { Chart } from 'chart.js';
-
+import * as Chart from 'chart.js';
+import { StoreService } from './store.service';
 import { NgChartjsService } from './ng-chartjs.service';
 import { getColors, Colors } from './colors';
 
@@ -63,7 +61,7 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
     this.element = element;   // 获取指令所在canvas元素
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.ctx = this.element.nativeElement.getContext('2d'); // 获取元素的ctx
     this.initFlag = true; // 是否初始化了的标志
 
@@ -72,7 +70,7 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
     }
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges): void {
     // TODO: 插件变化刷新，开放刷新按钮
     if (this.initFlag) {
       // Check if the changes are in the data or datasets
@@ -125,7 +123,7 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
     }
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     if (this.chart_) {
       this.chart_.destroy();
       this.chart_ = void 0;
@@ -145,17 +143,17 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
   }
 
   // Dynamic add data
-  addData(labels: Labels[], data: any[][]) {
+  addData(labels: Labels[], data: any[][]): void {
     this.addData_(labels, data);
     this.update();
   }
   // Dynamic remove data, orientation is 'ildest' or 'latest'
-  removeData(orientation: Orientation) {
+  removeData(orientation: Orientation): void {
     this.removeData_(orientation);
     this.update();
   }
 
-  private refresh(): any {
+  private refresh(): void {
     this.ngOnDestroy();
     this.chart_ = this.getChartBuilder(this.ctx/*, data, this.options*/);
     if (this.element.nativeElement.hasAttribute('id')) {
@@ -177,7 +175,7 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
     }
   }
 
-  private getChartBuilder(ctx: CanvasRenderingContext2D/*, data:Array<any>, options:any*/): any {
+  private getChartBuilder(ctx: CanvasRenderingContext2D/*, data:Array<any>, options:any*/): Chart {
     const datasets = this.getDatasets();
 
     const options: Chart.ChartOptions = Object.assign({}, this.options); // 深复制options

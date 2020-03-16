@@ -1,6 +1,5 @@
-import { Injectable, Inject, forwardRef } from '@angular/core';
-import { Chart } from 'chart.js';
-import { NgChartjsCustomPluginToken } from './plugin-token';
+import { Injectable } from '@angular/core';
+import * as Chart from 'chart.js';
 import { PluginConfig } from './plugins-config';
 import { StoreService } from './store.service';
 
