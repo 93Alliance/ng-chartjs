@@ -145,7 +145,7 @@ lineChartData: Chart.ChartDataSets[] = [
 ```
 View
 
-<img src="./src/assets/image/inline-plugin.png" width="50%" height="50%">
+<img src="./src/assets/image/inline-plugin.png" width="90%" height="90%">
 
 > The plugins properties  is an array of objects that allows multiple inline plugins to be used simultaneously.
 
@@ -268,7 +268,7 @@ lineChartData: Array<any> = [
 
 View 
 
-<img src="./src/assets/image/global-plugin.png" width="50%" height="50%">
+<img src="./src/assets/image/global-plugin.png" width="90%" height="90%">
 
 **Import third-party plugin libraries.**
 
@@ -312,7 +312,7 @@ options = {
 ```
 View
 
-<img src="./src/assets/image/global-plugin-annotation.jpg" width="50%" height="50%">
+<img src="./src/assets/image/global-plugin-annotation.jpg" width="90%" height="90%">
 
 > The parameter of registerPlugin function is an array of objects.
 ### Get chart.js instance
