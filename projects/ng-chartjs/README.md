@@ -1,13 +1,14 @@
-# ng-chartjs [![npm version](https://badge.fury.io/js/ng-chartjs.svg)](https://badge.fury.io/js/ng-chartjs)
+# ng-chartjs [![npm version](https://badge.fury.io/js/ng-chartjs.svg)](https://badge.fury.io/js/ng-chartjs) [![LICENSE](https://img.shields.io/badge/license-Anti%20996-blue.svg)](https://github.com/996icu/996.ICU/blob/master/LICENSE)
+
 A fully functional Angular2+ chart.js library.This chart library based on `ng2-charts`.
 
 [![NPM](https://nodei.co/npm/ng-chartjs.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/ng-chartjs/)
 
 > Thanks to valor-software's [ng2-charts](https://github.com/valor-software/ng2-charts).
 
-## Demo
+## Usage & Demo
 
-[Demo](https://93alliance.github.io/ng-chartjs/ng-chartjs/)
+[Demo](https://stackblitz.com/edit/angular-7eudux)
 
 ## Installation
 
@@ -18,6 +19,7 @@ npm install ng-chartjs --save
 2.You need to install Chart.js library in application.
 ```
 npm install chart.js --save
+npm install @types/chart.js -D
 ```
 ## Usage
 
@@ -44,6 +46,19 @@ imports: [
    NgChartjsModule.registerPlugin([...])
 ]
 ```
+
+3.Lazy Module
+
+```
+import { NgChartjsModule } from 'ng-chartjs';
+
+// In your lazy module:
+imports: [
+   NgChartjsModule.registerPlugin([...])
+]
+
+```
+
 ### Chart types
 
 - line
@@ -51,6 +66,7 @@ imports: [
 - radar
 - pie
 - polarArea
+- ...
 
 ### Plugins
 #### inline plugin
@@ -69,7 +85,9 @@ eg. [source code](https://github.com/93Alliance/ng-chartjs/tree/master/src/app/p
 
 ```
 ...
-lineChartData: Array<any> = [
+import { Chart } from 'chart.js';
+
+lineChartData: Chart.ChartDataSets[] = [
     {
       label: 'My First dataset',
       fill: false,
@@ -127,7 +145,7 @@ lineChartData: Array<any> = [
 ```
 View
 
-![](http://fly-share-image.oss-cn-beijing.aliyuncs.com/18-11-6/48868545.jpg)
+<img src="./src/assets/image/inline-plugin.png" width="50%" height="50%">
 
 > The plugins properties  is an array of objects that allows multiple inline plugins to be used simultaneously.
 
@@ -250,7 +268,7 @@ lineChartData: Array<any> = [
 
 View 
 
-![](http://fly-share-image.oss-cn-beijing.aliyuncs.com/18-11-6/14078217.jpg)
+<img src="./src/assets/image/global-plugin.png" width="50%" height="50%">
 
 **Import third-party plugin libraries.**
 
@@ -294,7 +312,7 @@ options = {
 ```
 View
 
-![](http://fly-share-image.oss-cn-beijing.aliyuncs.com/18-11-6/12771005.jpg)
+<img src="./src/assets/image/global-plugin-annotation.jpg" width="50%" height="50%">
 
 > The parameter of registerPlugin function is an array of objects.
 ### Get chart.js instance
@@ -322,6 +340,17 @@ ngInit() {
 }
 ...
 ```
+### Get NgChartjs Directive instance
+
+`html`
+```
+<canvas #ngChartjs="ngChartjs"></canvas>
+```
+`ts`
+```
+@ViewChild('ngChartjs', {static: true})
+private readonly ngChartjs: NgChartjsDirective;
+```
 
 ### Get random color
 
@@ -344,6 +373,15 @@ inlinePlugins |  any[] | Chart.js inline plugin. [Chart.js Plugins](https://www.
 adding | `{ labels: any[], data: any[][] }` |  You can add new data and update chart. It needs to be reassigned to trigger.
 removing | `{orientation: string}` |  You can delete the latest or oldest  data.It needs to be reassigned to trigger
 resetOption | any | Reset options can trigger update chart
+
+### Method
+
+- chart -- Get chartjs instance
+- update -- Update chartjs
+- addData -- Dynamically add data to chart
+	Parameter: `labels` and `data`
+- remove -- Dynamically remove data to chart
+	Parameter: `oldest` or `latest`
 
 ### Events
 

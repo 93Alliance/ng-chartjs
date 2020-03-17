@@ -47,6 +47,18 @@ imports: [
 ]
 ```
 
+3.Lazy Module
+
+```
+import { NgChartjsModule } from 'ng-chartjs';
+
+// In your lazy module:
+imports: [
+   NgChartjsModule.registerPlugin([...])
+]
+
+```
+
 ### Chart types
 
 - line
@@ -54,6 +66,7 @@ imports: [
 - radar
 - pie
 - polarArea
+- ...
 
 ### Plugins
 #### inline plugin
@@ -132,7 +145,7 @@ lineChartData: Chart.ChartDataSets[] = [
 ```
 View
 
-![](http://fly-share-image.oss-cn-beijing.aliyuncs.com/18-11-6/48868545.jpg)
+<img src="./src/assets/image/inline-plugin.png" width="50%" height="50%">
 
 > The plugins properties  is an array of objects that allows multiple inline plugins to be used simultaneously.
 
@@ -255,7 +268,7 @@ lineChartData: Array<any> = [
 
 View 
 
-![](http://fly-share-image.oss-cn-beijing.aliyuncs.com/18-11-6/14078217.jpg)
+<img src="./src/assets/image/global-plugin.png" width="50%" height="50%">
 
 **Import third-party plugin libraries.**
 
@@ -299,7 +312,7 @@ options = {
 ```
 View
 
-![](http://fly-share-image.oss-cn-beijing.aliyuncs.com/18-11-6/12771005.jpg)
+<img src="./src/assets/image/global-plugin-annotation.jpg" width="50%" height="50%">
 
 > The parameter of registerPlugin function is an array of objects.
 ### Get chart.js instance
@@ -327,6 +340,17 @@ ngInit() {
 }
 ...
 ```
+### Get NgChartjs Directive instance
+
+`html`
+```
+<canvas #ngChartjs="ngChartjs"></canvas>
+```
+`ts`
+```
+@ViewChild('ngChartjs', {static: true})
+private readonly ngChartjs: NgChartjsDirective;
+```
 
 ### Get random color
 
@@ -349,6 +373,15 @@ inlinePlugins |  any[] | Chart.js inline plugin. [Chart.js Plugins](https://www.
 adding | `{ labels: any[], data: any[][] }` |  You can add new data and update chart. It needs to be reassigned to trigger.
 removing | `{orientation: string}` |  You can delete the latest or oldest  data.It needs to be reassigned to trigger
 resetOption | any | Reset options can trigger update chart
+
+### Method
+
+- chart -- Get chartjs instance
+- update -- Update chartjs
+- addData -- Dynamically add data to chart
+	Parameter: `labels` and `data`
+- remove -- Dynamically remove data to chart
+	Parameter: `oldest` or `latest`
 
 ### Events
 
