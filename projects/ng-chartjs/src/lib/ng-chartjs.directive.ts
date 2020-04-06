@@ -173,6 +173,8 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
     } else {
       this.chart_.data.datasets[0].data = newDataValues;
     }
+    // update colors
+    this.chart_.data.datasets = this.updateColors(this.chart_.data.datasets);
   }
 
   private getChartBuilder(ctx: CanvasRenderingContext2D/*, data:Array<any>, options:any*/): Chart {
@@ -226,6 +228,18 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
       }
     }
 
+    datasets = this.updateColors(datasets); // update colors
+
+    if (!datasets) {
+      throw new Error(`ng-chartjs configuration error,
+      data or datasets field are required to render char ${this.chartType}`);
+    }
+
+    return datasets;
+  }
+
+  // update dataset colors
+  private updateColors(datasets: Chart.ChartDataSets[]): Chart.ChartDataSets[] {
     if (this.datasets && this.datasets.length || (datasets && datasets.length)) {
       // fix elm type, pre type is number
       datasets = (this.datasets || datasets).map((elm: Chart.ChartDataSets, index: number) => {
@@ -238,12 +252,6 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
         return newElm;
       });
     }
-
-    if (!datasets) {
-      throw new Error(`ng-chartjs configuration error,
-      data or datasets field are required to render char ${this.chartType}`);
-    }
-
     return datasets;
   }
 

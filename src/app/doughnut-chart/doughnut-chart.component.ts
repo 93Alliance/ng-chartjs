@@ -20,6 +20,12 @@ export class DoughnutChartComponent implements OnInit {
   public chartHovered(e: any): void {
     // console.log(e);
   }
+
+  public addData(): void {
+    this.doughnutChartLabels = ['Download Sales', 'In-Store Sales', 'Mail-Order Sales', 'google Sales', 'TianMao Sales'];
+    this.doughnutChartData = [350, 450, 100, 80, 90];
+  }
+
   constructor() { }
 
   ngOnInit() {
