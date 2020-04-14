@@ -57,6 +57,7 @@ export class LineChartComponent implements OnInit {
 
   ngOnInit() {
     this.changeLabels();
+    console.log(this.ngChartjs.chart);
   }
 
   changeLabels() {

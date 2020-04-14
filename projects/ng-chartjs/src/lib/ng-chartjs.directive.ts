@@ -48,8 +48,9 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
   // 鼠标悬浮在标签或者活跃的点上面时
   @Output() chartHover: EventEmitter<NgChartjsEvent> = new EventEmitter();
 
+  // get Chartjs object
+  chart: Chart;
   private ctx: CanvasRenderingContext2D;
-  private chart_: Chart;
   private initFlag = false;
   private hasChanges = false;
 
@@ -84,13 +85,13 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
       }
 
       if (changes.hasOwnProperty('labels')) {
-        this.chart_.data.labels = changes.labels.currentValue;
+        this.chart.data.labels = changes.labels.currentValue;
         this.hasChanges = true;
       }
 
       if (changes.hasOwnProperty('legend')) {
         if (changes.legend.currentValue !== changes.legend.previousValue) {
-          this.chart_.options.legend.display = changes.legend.currentValue;
+          this.chart.options.legend.display = changes.legend.currentValue;
           this.hasChanges = true;
         }
       }
@@ -112,21 +113,21 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
       }
 
       if (changes.hasOwnProperty('resetOption')) {
-        Object.assign(this.chart_.options, changes.resetOption.currentValue);
+        Object.assign(this.chart.options, changes.resetOption.currentValue);
         this.hasChanges = true;
       }
 
       if (this.hasChanges) {
-        this.chart_.update();
+        this.chart.update();
         this.hasChanges = false;
       }
     }
   }
 
   ngOnDestroy(): void {
-    if (this.chart_) {
-      this.chart_.destroy();
-      this.chart_ = void 0;
+    if (this.chart) {
+      this.chart.destroy();
+      this.chart = void 0;
 
       if (this.element.nativeElement.hasAttribute('id')) {
         this.storeService.removeChart(this.element.nativeElement.id);  // delete chart instance.
@@ -134,12 +135,9 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
     }
   }
 
-  // get Chartjs object
-  get chart() { return this.chart_; }
-
   // update chartjs
   update(): void {
-    this.chart_.update();
+    this.chart.update();
   }
 
   // Dynamic add data
@@ -155,15 +153,15 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
 
   private refresh(): void {
     this.ngOnDestroy();
-    this.chart_ = this.getChartBuilder(this.ctx/*, data, this.options*/);
+    this.chart = this.getChartBuilder(this.ctx/*, data, this.options*/);
     if (this.element.nativeElement.hasAttribute('id')) {
-      this.storeService.addChart(this.element.nativeElement.id, this.chart_);
+      this.storeService.addChart(this.element.nativeElement.id, this.chart);
     }
   }
 
   private updateChartData(newDataValues: number[] | any[]): void {
     if (Array.isArray(newDataValues[0].data)) {
-      this.chart_.data.datasets.forEach((dataset: Chart.ChartDataSets, i: number) => {
+      this.chart.data.datasets.forEach((dataset: Chart.ChartDataSets, i: number) => {
         dataset.data = newDataValues[i].data;
 
         if (newDataValues[i].label) {
@@ -171,10 +169,10 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
         }
       });
     } else {
-      this.chart_.data.datasets[0].data = newDataValues;
+      this.chart.data.datasets[0].data = newDataValues;
     }
     // update colors
-    this.chart_.data.datasets = this.updateColors(this.chart_.data.datasets);
+    this.chart.data.datasets = this.updateColors(this.chart.data.datasets);
   }
 
   private getChartBuilder(ctx: CanvasRenderingContext2D/*, data:Array<any>, options:any*/): Chart {
@@ -260,9 +258,9 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
       return;
     }
     // update labels
-    labels.forEach((label) => { this.chart_.data.labels.push(label); });
+    labels.forEach((label) => { this.chart.data.labels.push(label); });
 
-    this.chart_.data.datasets.forEach((dataset, index) => {
+    this.chart.data.datasets.forEach((dataset, index) => {
       if (data[index]) {
         for (let i = 0; i < data[index].length; i++) {
           dataset.data.push(data[index][i]);
@@ -277,13 +275,13 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
   private removeData_(orientation: Orientation): void {
     // fix: support to oldest feature
     if (orientation === 'latest') {
-      this.chart_.data.labels.pop();
-      this.chart_.data.datasets.forEach((dataset: Chart.ChartDataSets) => {
+      this.chart.data.labels.pop();
+      this.chart.data.datasets.forEach((dataset: Chart.ChartDataSets) => {
         dataset.data.pop();
       });
     } else if (orientation === 'oldest') {
-      this.chart_.data.labels.shift();
-      this.chart_.data.datasets.forEach((dataset: Chart.ChartDataSets) => {
+      this.chart.data.labels.shift();
+      this.chart.data.datasets.forEach((dataset: Chart.ChartDataSets) => {
         dataset.data.shift();
       });
     }
