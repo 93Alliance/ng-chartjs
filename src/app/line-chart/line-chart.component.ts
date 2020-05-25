@@ -1,5 +1,5 @@
 import { NgChartjsDirective } from './../../../projects/ng-chartjs/src/lib/ng-chartjs.directive';
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { ChartDataSets } from 'chart.js';
 
 @Component({
@@ -7,7 +7,7 @@ import { ChartDataSets } from 'chart.js';
   templateUrl: './line-chart.component.html',
   styleUrls: ['./line-chart.component.css']
 })
-export class LineChartComponent implements OnInit {
+export class LineChartComponent implements OnInit, AfterViewInit {
 
   // lineChart
   lineChartData: ChartDataSets[] = [
@@ -54,10 +54,12 @@ export class LineChartComponent implements OnInit {
   @ViewChild('ngChartjs', {static: true})
   private readonly ngChartjs: NgChartjsDirective;
   constructor() { }
+  ngAfterViewInit(): void {
+    console.log(this.ngChartjs.chart);
+  }
 
   ngOnInit() {
     this.changeLabels();
-    console.log(this.ngChartjs.chart);
   }
 
   changeLabels() {

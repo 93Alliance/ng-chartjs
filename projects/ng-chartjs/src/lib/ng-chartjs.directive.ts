@@ -7,7 +7,8 @@ import {
   Input,
   Output,
   SimpleChanges,
-  Directive
+  Directive,
+  NgZone
 } from '@angular/core';
 import * as Chart from 'chart.js';
 import { StoreService } from './store.service';
@@ -43,6 +44,8 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
   @Input() removing: { orientation: Orientation };  // orientation is 'oldest' or 'latest
   @Input() resetOption: Chart.ChartType;
 
+  @Input() noZone = true; // disable angular NgZone
+
   // 鼠标点击图表所有的区域
   @Output() chartClick: EventEmitter<NgChartjsEvent> = new EventEmitter();
   // 鼠标悬浮在标签或者活跃的点上面时
@@ -56,9 +59,11 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
 
   private element: ElementRef;
 
-  public constructor(element: ElementRef,
+  public constructor(
+    element: ElementRef,
     private ngChartjsService: NgChartjsService,
-    private storeService: StoreService) {
+    private storeService: StoreService,
+    private zone: NgZone) {
     this.element = element;   // 获取指令所在canvas元素
   }
 
@@ -67,7 +72,13 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
     this.initFlag = true; // 是否初始化了的标志
 
     if (this.data || this.datasets) { // 判断data和datasets有一个有数据就刷新
-      this.refresh();
+      if (this.noZone) {
+        this.zone.runOutsideAngular(() => {
+         this.refresh();
+        });
+      } else {
+        this.refresh();
+      }
     }
   }
 

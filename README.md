@@ -373,6 +373,7 @@ inlinePlugins |  any[] | Chart.js inline plugin. [Chart.js Plugins](https://www.
 adding | `{ labels: any[], data: any[][] }` |  You can add new data and update chart. It needs to be reassigned to trigger.
 removing | `{orientation: string}` |  You can delete the latest or oldest  data.It needs to be reassigned to trigger
 resetOption | any | Reset options can trigger update chart
+noZone | boolean | Default value is `true`, if enabled it, it will protected from zone effects and improve performance.
 
 ### Method
 
