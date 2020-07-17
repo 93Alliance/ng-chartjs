@@ -10,6 +10,10 @@
     <app-polar-chart></app-polar-chart>
     <app-reset-option></app-reset-option>
     <app-chart-type></app-chart-type>
+    <app-chart [chartId]="'test1'"></app-chart>
+    <app-chart [chartId]="'test2'"></app-chart>
+    <button mat-raised-button color="primary" (click)="getInstance()">Get Instance</button>
+    <span>Please look at console</span>
     <br>
     <a [routerLink]="['lazy']" routerLinkActive="router-link-active" >To Lazy Module</a>
     <br>

@@ -45,6 +45,7 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
   @Input() resetOption: Chart.ChartType;
 
   @Input() noZone = true; // disable angular NgZone
+  @Input() id: string = null; // chart instance id
 
   // 鼠标点击图表所有的区域
   @Output() chartClick: EventEmitter<NgChartjsEvent> = new EventEmitter();
@@ -132,6 +133,12 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
         this.chart.update();
         this.hasChanges = false;
       }
+
+      // change chart id
+      if (changes.hasOwnProperty('id')) {
+        this.removeChart(changes.id.previousValue);
+        this.addChart(changes.id.currentValue);
+      }
     }
   }
 
@@ -140,9 +147,7 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
       this.chart.destroy();
       this.chart = void 0;
 
-      if (this.element.nativeElement.hasAttribute('id')) {
-        this.storeService.removeChart(this.element.nativeElement.id);  // delete chart instance.
-      }
+      this.removeChart(this.id);
     }
   }
 
@@ -165,8 +170,26 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
   private refresh(): void {
     this.ngOnDestroy();
     this.chart = this.getChartBuilder(this.ctx/*, data, this.options*/);
+    this.addChart(this.id);
+  }
+
+  private removeChart(id: string): void {
+    if (this.element.nativeElement.hasAttribute('id')) {
+      this.storeService.removeChart(this.element.nativeElement.id);
+      return;
+    }
+    if (id !== null && id !== undefined) {
+      this.storeService.removeChart(id);  // delete chart instance.
+    }
+  }
+
+  private addChart(id: string): void {
     if (this.element.nativeElement.hasAttribute('id')) {
       this.storeService.addChart(this.element.nativeElement.id, this.chart);
+      return;
+    }
+    if (id !== null && id !== undefined) {
+      this.storeService.addChart(id, this.chart);
     }
   }
 
