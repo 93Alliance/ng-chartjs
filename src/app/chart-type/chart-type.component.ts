@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { NgChartjsService } from './../../../projects/ng-chartjs/src/lib/ng-chartjs.service';
+import { NgChartjsService } from 'ng-chartjs';
 
 @Component({
   selector: 'app-chart-type',

@@ -1,4 +1,4 @@
-import { NgChartjsDirective } from './../../../projects/ng-chartjs/src/lib/ng-chartjs.directive';
+import { NgChartjsDirective } from 'ng-chartjs';
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { ChartDataSets } from 'chart.js';
 

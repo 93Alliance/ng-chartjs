@@ -1,4 +1,4 @@
-import { NgChartjsService } from './../../../projects/ng-chartjs/src/lib/ng-chartjs.service';
+import { NgChartjsService } from 'ng-chartjs';
 import { Component, OnInit } from '@angular/core';
 
 @Component({

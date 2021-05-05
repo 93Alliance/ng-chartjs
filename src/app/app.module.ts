@@ -1,6 +1,6 @@
 import { ChartComponent } from './chart/chart.component';
 import { AppRoutingModule } from './app-routing.module';
-import { NgChartjsDirective } from './../../projects/ng-chartjs/src/lib/ng-chartjs.directive';
+// import { NgChartjsDirective } from 'ng-chartjs';
 // import { NgChartjsModule } from './../../projects/ng-chartjs/src/lib/ng-chartjs.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -88,12 +88,13 @@ const horizonalLinePlugin = {
     PolarChartComponent,
     ResetOptionComponent,
     ChartTypeComponent,
-    NgChartjsDirective,
+    // NgChartjsDirective,
     ChartComponent,
   ],
   imports: [
     BrowserModule,
     NgChartjsModule.registerPlugin([horizonalLinePlugin, chartAnnotation]),
+    // NgChartjsModule,
     BrowserAnimationsModule,
     MaterialModule,
     AppRoutingModule
