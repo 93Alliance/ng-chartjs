@@ -36,7 +36,7 @@ export class PluginComponent implements OnInit {
     responsive: true
   };
   public lineChartLegend = true;
-  public lineChartType = 'line';
+  public lineChartType: Chart.ChartType = 'line';
   inlinePlugin: any;
   textPlugin: any;
   constructor() { }

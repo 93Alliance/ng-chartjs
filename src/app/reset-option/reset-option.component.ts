@@ -1,5 +1,6 @@
 import { NgChartjsService } from 'ng-chartjs';
 import { Component, OnInit } from '@angular/core';
+import * as Chart from 'chart.js';
 
 @Component({
   selector: 'app-reset-option',
@@ -56,7 +57,7 @@ export class ResetOptionComponent implements OnInit {
     }
   };
   public lineChartLegend = true;
-  public lineChartType = 'line';
+  public lineChartType: Chart.ChartType = 'line';
   resetOption: any;
   constructor(private ngChartjsService: NgChartjsService) { }
 

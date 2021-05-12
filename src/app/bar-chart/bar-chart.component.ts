@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import * as Chart from 'chart.js';
 
 @Component({
   selector: 'app-bar-chart',
@@ -12,7 +13,7 @@ export class BarChartComponent implements OnInit {
     responsive: true
   };
   public barChartLabels: string[] = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
-  public barChartType = 'bar';
+  public barChartType: Chart.ChartType = 'bar';
   public barChartLegend = true;
 
   public barChartData: any[] = [

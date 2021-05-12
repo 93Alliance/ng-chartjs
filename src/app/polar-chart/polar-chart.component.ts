@@ -12,7 +12,7 @@ export class PolarChartComponent implements OnInit {
   public polarAreaChartData: number[] = [300, 500, 100, 40, 120];
   public polarAreaLegend = true;
 
-  public polarAreaChartType = 'polarArea';
+  public polarAreaChartType: Chart.ChartType = 'polarArea';
 
   // events
   public chartClicked(e: any): void {

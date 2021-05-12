@@ -10,7 +10,7 @@ export class PieChartComponent implements OnInit {
   // Pie
   public pieChartLabels: string[] = ['Download Sales', 'In-Store Sales', 'Mail Sales'];
   public pieChartData: number[] = [300, 500, 100];
-  public pieChartType = 'pie';
+  public pieChartType: Chart.ChartType = 'pie';
 
   pieColors = [
     {

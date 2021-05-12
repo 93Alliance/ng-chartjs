@@ -42,7 +42,7 @@ export class ChartComponent implements OnInit {
   ];
   lineChartLabels: Array<any> = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
   lineChartLegend = true;
-  lineChartType = 'line';
+  lineChartType: Chart.ChartType = 'line';
 
   ngOnInit() {
   }

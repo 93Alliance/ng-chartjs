@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import * as Chart from 'chart.js';
 
 @Component({
   selector: 'app-global-plugin',
@@ -46,7 +47,7 @@ export class GlobalPluginComponent implements OnInit {
       text: 'min'
     }]
   };
-  lineChartGlobalPlugin = {
+  lineChartGlobalPlugin: Chart.ChartOptions = {
     responsive: true,
     annotation: {
       annotations: [
@@ -69,7 +70,7 @@ export class GlobalPluginComponent implements OnInit {
     }
   };
   public lineChartLegend = true;
-  public lineChartType = 'line';
+  public lineChartType: Chart.ChartType = 'line';
   constructor() { }
 
   ngOnInit() {

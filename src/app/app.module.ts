@@ -27,7 +27,7 @@ import { NgChartjsModule } from 'ng-chartjs';
 const chartAnnotation = ChartAnnotation;
 // const piechartOutlabels = PiechartOutlabels;
 // chartAnnotation['id'] = 'annotation';
-export function horizonalLine(chartInstance) {
+export function horizonalLine(chartInstance: any) {
   const yScale = chartInstance.scales['y-axis-0'];
   const canvas = chartInstance.chart;
   const ctx = canvas.ctx;

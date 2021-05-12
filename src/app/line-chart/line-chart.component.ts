@@ -16,7 +16,7 @@ export class LineChartComponent implements OnInit, AfterViewInit {
     { data: [18, 48, 77, 9, 100, 27, 40], label: 'Series C' }
   ];
   currentLineChartLabelsIdx = 0;
-  lineChartLabels: Array<any>;
+  lineChartLabels: Array<any> = [];
   lineChartOptions: any = {
     responsive: true
   };
@@ -47,15 +47,15 @@ export class LineChartComponent implements OnInit, AfterViewInit {
     }
   ];
   public lineChartLegend = true;
-  public lineChartType = 'line';
+  public lineChartType: Chart.ChartType = 'line';
   updateData: any;
-  isUpdate: boolean;
+  // isUpdate: boolean;
   removing: any;
   @ViewChild('ngChartjs', {static: true})
-  private readonly ngChartjs: NgChartjsDirective;
+  private readonly ngChartjs: NgChartjsDirective | undefined;
   constructor() { }
   ngAfterViewInit(): void {
-    console.log(this.ngChartjs.chart);
+    console.log(this.ngChartjs!.chart);
   }
 
   ngOnInit() {

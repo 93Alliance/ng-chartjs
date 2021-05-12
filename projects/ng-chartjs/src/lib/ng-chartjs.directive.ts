@@ -24,27 +24,37 @@ export interface NgChartjsEvent { event: MouseEvent; active: Array<{}>; }
 export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
 
   // 图表的点集，它应该是数组<number []>仅用于线，条和雷达，否则数字[];
+  // @ts-ignore
   @Input() data: number[] | any[];
   // 相当于chart.js内 data: {datasets: [{...}]}
+  // @ts-ignore
   @Input() datasets: Chart.ChartDataSets[];
   // x轴标签。这对图表来说是必要的：线，条和雷达。并且只是图表的标签（悬停）：polarArea，pie和doughnut
   @Input() labels: Labels = [];
   // 相当于chart.js的option
   @Input() options: Chart.ChartOptions = {};
   // 内联插件属性
+  // @ts-ignore
   @Input() inlinePlugins: any[];
   // chartType line, bar, radar, pie, polarArea, doughnut
+  // @ts-ignore
   @Input() chartType: Chart.ChartType;
   // 数据颜色，如果没有指定，将使用默认和|或随机颜色
+  // @ts-ignore
   @Input() colors: Colors[];
   // 是否显示图例
+  // @ts-ignore
   @Input() legend: boolean;
 
+  // @ts-ignore
   @Input() adding: { labels: Labels[], data: any[][] };
+  // @ts-ignore
   @Input() removing: { orientation: Orientation };  // orientation is 'oldest' or 'latest
-  @Input() resetOption: Chart.ChartType;
+  // @ts-ignore
+  @Input() resetOption: Chart.ChartOptions;
 
   @Input() noZone = true; // disable angular NgZone
+  // @ts-ignore
   @Input() id: string = null; // chart instance id
 
   // 鼠标点击图表所有的区域
@@ -53,7 +63,9 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
   @Output() chartHover: EventEmitter<NgChartjsEvent> = new EventEmitter();
 
   // get Chartjs object
+  // @ts-ignore
   chart: Chart;
+  // @ts-ignore
   private ctx: CanvasRenderingContext2D;
   private initFlag = false;
   private hasChanges = false;
@@ -103,6 +115,7 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
 
       if (changes.hasOwnProperty('legend')) {
         if (changes.legend.currentValue !== changes.legend.previousValue) {
+          // @ts-ignore
           this.chart.options.legend.display = changes.legend.currentValue;
           this.hasChanges = true;
         }
@@ -145,6 +158,7 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
   ngOnDestroy(): void {
     if (this.chart) {
       this.chart.destroy();
+      // @ts-ignore
       this.chart = void 0;
 
       this.removeChart(this.id);
@@ -195,6 +209,7 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
 
   private updateChartData(newDataValues: number[] | any[]): void {
     if (Array.isArray(newDataValues[0].data)) {
+      // @ts-ignore
       this.chart.data.datasets.forEach((dataset: Chart.ChartDataSets, i: number) => {
         dataset.data = newDataValues[i].data;
 
@@ -203,9 +218,11 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
         }
       });
     } else {
+      // @ts-ignore
       this.chart.data.datasets[0].data = newDataValues;
     }
     // update colors
+    // @ts-ignore
     this.chart.data.datasets = this.updateColors(this.chart.data.datasets);
   }
 
@@ -248,6 +265,7 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
 
   // 获取 chart.js的datasets数据
   private getDatasets(): Chart.ChartDataSets[] {
+    // @ts-ignore
     let datasets: Chart.ChartDataSets[] = void 0;
     // in case if datasets is not provided, but data is present
     if (!this.datasets || !this.datasets.length && (this.data && this.data.length)) {
@@ -279,6 +297,7 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
         if (this.colors && this.colors.length) {
           Object.assign(newElm, this.colors[index]);
         } else {
+          // @ts-ignore
           Object.assign(newElm, getColors(this.chartType, index, newElm.data.length));
         }
         return newElm;
@@ -292,11 +311,13 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
       return;
     }
     // update labels
+    // @ts-ignore
     labels.forEach((label) => { this.chart.data.labels.push(label); });
-
+    // @ts-ignore
     this.chart.data.datasets.forEach((dataset, index) => {
       if (data[index]) {
         for (let i = 0; i < data[index].length; i++) {
+          // @ts-ignore
           dataset.data.push(data[index][i]);
         }
       } else {
@@ -309,13 +330,19 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
   private removeData_(orientation: Orientation): void {
     // fix: support to oldest feature
     if (orientation === 'latest') {
+      // @ts-ignore
       this.chart.data.labels.pop();
+      // @ts-ignore
       this.chart.data.datasets.forEach((dataset: Chart.ChartDataSets) => {
+        // @ts-ignore
         dataset.data.pop();
       });
     } else if (orientation === 'oldest') {
+      // @ts-ignore
       this.chart.data.labels.shift();
+      // @ts-ignore
       this.chart.data.datasets.forEach((dataset: Chart.ChartDataSets) => {
+        // @ts-ignore
         dataset.data.shift();
       });
     }

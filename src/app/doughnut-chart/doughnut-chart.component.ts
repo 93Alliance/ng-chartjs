@@ -10,7 +10,7 @@ export class DoughnutChartComponent implements OnInit {
   // Doughnut
   public doughnutChartLabels: string[] = ['Download Sales', 'In-Store Sales', 'Mail-Order Sales'];
   public doughnutChartData: number[] = [350, 450, 100];
-  public doughnutChartType = 'doughnut';
+  public doughnutChartType: Chart.ChartType = 'doughnut';
 
   // events
   public chartClicked(e: any): void {
