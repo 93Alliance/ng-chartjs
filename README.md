@@ -8,6 +8,7 @@ A fully functional Angular2+ chart.js library.This chart library based on `ng2-c
 
 | Angular | ng-chartjs| NPM package | chart.js |
 |  :---:  |   :---:   |   :---:     | :---: |
+| 11.x.x   |   0.2.3   | ng-chartjs@0.2.3 | chart.js@^2.9.4 |
 | 11.x.x   |   0.2.2   | ng-chartjs@^0.2.2 | chart.js@^2.9.4 |
 | 9.x.x   |   0.2.1   | ng-chartjs@^0.2.1 | chart.js@^2.9.4 |
 | 8.x.x   |   0.1.9   | ng-chartjs@^0.1.9 | |
