@@ -8,6 +8,7 @@ A fully functional Angular2+ chart.js library.This chart library based on `ng2-c
 
 | Angular | ng-chartjs| NPM package | chart.js |
 |  :---:  |   :---:   |   :---:     | :---: |
+| 12.x.x   |   0.2.4   | ng-chartjs@0.2.4 | chart.js@^2.9.4 |
 | 11.x.x   |   0.2.3   | ng-chartjs@0.2.3 | chart.js@^2.9.4 |
 | 11.x.x   |   0.2.2   | ng-chartjs@^0.2.2 | chart.js@^2.9.4 |
 | 9.x.x   |   0.2.1   | ng-chartjs@^0.2.1 | chart.js@^2.9.4 |
@@ -153,7 +154,9 @@ lineChartData: Chart.ChartDataSets[] = [
 ```
 View
 
-<img src="./src/assets/image/inline-plugin.png" width="50%" height="50%">
+<img src="https://github.com/93Alliance/ng-chartjs/blob/develop/src/assets/image/inline-plugin.png?raw=true" width="50%" height="50%">
+
+
 
 > The plugins properties  is an array of objects that allows multiple inline plugins to be used simultaneously.
 
@@ -276,7 +279,7 @@ lineChartData: Array<any> = [
 
 View 
 
-<img src="./src/assets/image/global-plugin.png" width="50%" height="50%">
+<img src="https://github.com/93Alliance/ng-chartjs/blob/develop/src/assets/image/global-plugin.png?raw=true" width="50%" height="50%">
 
 **Import third-party plugin libraries.**
 
@@ -320,7 +323,7 @@ options = {
 ```
 View
 
-<img src="./src/assets/image/global-plugin-annotation.jpg" width="50%" height="50%">
+<img src="https://github.com/93Alliance/ng-chartjs/blob/develop/src/assets/image/global-plugin-annotation.jpg?raw=true" width="50%" height="50%">
 
 > The parameter of registerPlugin function is an array of objects.
 ### Get chart.js instance

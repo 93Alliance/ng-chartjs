@@ -6,6 +6,15 @@ A fully functional Angular2+ chart.js library.This chart library based on `ng2-c
 
 > Thanks to valor-software's [ng2-charts](https://github.com/valor-software/ng2-charts).
 
+| Angular | ng-chartjs| NPM package | chart.js |
+|  :---:  |   :---:   |   :---:     | :---: |
+| 12.x.x   |   0.2.4   | ng-chartjs@0.2.4 | chart.js@^2.9.4 |
+| 11.x.x   |   0.2.3   | ng-chartjs@0.2.3 | chart.js@^2.9.4 |
+| 11.x.x   |   0.2.2   | ng-chartjs@^0.2.2 | chart.js@^2.9.4 |
+| 9.x.x   |   0.2.1   | ng-chartjs@^0.2.1 | chart.js@^2.9.4 |
+| 8.x.x   |   0.1.9   | ng-chartjs@^0.1.9 | |
+| 7.x.x   |   0.1.1   | ng-chartjs@^0.1.1 | |
+
 ## Usage & Demo
 
 [Demo](https://stackblitz.com/edit/angular-7eudux)
@@ -145,7 +154,9 @@ lineChartData: Chart.ChartDataSets[] = [
 ```
 View
 
-<img src="./src/assets/image/inline-plugin.png" width="90%" height="90%">
+<img src="https://github.com/93Alliance/ng-chartjs/blob/develop/src/assets/image/inline-plugin.png?raw=true" width="50%" height="50%">
+
+
 
 > The plugins properties  is an array of objects that allows multiple inline plugins to be used simultaneously.
 
@@ -268,7 +279,7 @@ lineChartData: Array<any> = [
 
 View 
 
-<img src="./src/assets/image/global-plugin.png" width="90%" height="90%">
+<img src="https://github.com/93Alliance/ng-chartjs/blob/develop/src/assets/image/global-plugin.png?raw=true" width="50%" height="50%">
 
 **Import third-party plugin libraries.**
 
@@ -312,7 +323,7 @@ options = {
 ```
 View
 
-<img src="./src/assets/image/global-plugin-annotation.jpg" width="90%" height="90%">
+<img src="https://github.com/93Alliance/ng-chartjs/blob/develop/src/assets/image/global-plugin-annotation.jpg?raw=true" width="50%" height="50%">
 
 > The parameter of registerPlugin function is an array of objects.
 ### Get chart.js instance
@@ -369,7 +380,7 @@ chartType | ?string |  indicates the type of charts, it can be: `line`, `bar`, `
 options | ?any |   chart options (as from [Chart.js documentation](http://www.chartjs.org/docs/))
 colors | ?Array<any> |  data colors, will use default and|or random colors if not specified (see below)
 legend | ?boolean=false | if true show legend below the chart, otherwise not be shown
-inlinePlugins |  any[] | Chart.js inline plugin. [Chart.js Plugins](https://www.chartjs.org/docs/master/developers/plugins.html), [Other Reference](https://riptutorial.com/chart-js/topic/6510/plugins)
+inlinePlugins |  any[] | Chart.js inline plugin. [Chart.js Plugins](https://www.chartjs.org/docs/latest/developers/plugins.html), [Other Reference](https://www.wikiod.com/w/Chart.JS_Plugins)
 adding | `{ labels: any[], data: any[][] }` |  You can add new data and update chart. It needs to be reassigned to trigger.
 removing | `{orientation: string}` |  You can delete the latest or oldest  data.It needs to be reassigned to trigger
 resetOption | any | Reset options can trigger update chart
