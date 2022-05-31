@@ -86,9 +86,13 @@ eg. [source code](https://github.com/93Alliance/ng-chartjs/tree/master/src/app/p
 
 `html` file.
 ```
-<canvas ngChartjs [datasets]="lineChartData" [labels]="lineChartLabels"
-          [options]="lineChartOptions" [legend]="lineChartLegend" [chartType]="lineChartType"
-          [inlinePlugins]="inlinePlugin">
+<canvas ngChartjs 
+  [datasets]="lineChartData" 
+  [labels]="lineChartLabels"
+  [options]="lineChartOptions"
+  [legend]="lineChartLegend"
+  [chartType]="lineChartType"
+  [inlinePlugins]="inlinePlugin">
 </canvas>
 ```
 `ts` file.
@@ -231,8 +235,12 @@ imports: [
 
 `html` file.
 ```
- <canvas ngChartjs [datasets]="lineChartData" [labels]="lineChartLabels"
-            [options]="lineChartOptions" [legend]="lineChartLegend" [chartType]="lineChartType">
+<canvas ngChartjs 
+  [datasets]="lineChartData" 
+  [labels]="lineChartLabels"
+  [options]="lineChartOptions" 
+  [legend]="lineChartLegend" 
+  [chartType]="lineChartType">
 </canvas>
 ```
 
@@ -345,8 +353,14 @@ Set the id attribute of the element,then Get the chart.js object by id. [see sou
 
 ```
     <div style="position: relative; width: 600px;">
-      <canvas id="testChart" ngChartjs [datasets]="lineChartData" [labels]="lineChartLabels"
-      [options]="lineChartOptions" [legend]="lineChartLegend" [chartType]="lineChartType" [resetOption]="resetOption"></canvas>
+      <canvas id="testChart" ngChartjs 
+        [datasets]="lineChartData" 
+        [labels]="lineChartLabels"
+        [options]="lineChartOptions" 
+        [legend]="lineChartLegend" 
+        [chartType]="lineChartType" 
+        [resetOption]="resetOption">
+      </canvas>
     </div>
 ```
 `ts` file

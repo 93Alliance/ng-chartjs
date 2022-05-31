@@ -1,6 +1,6 @@
 import { NgChartjsService } from 'ng-chartjs';
 import { Component, OnInit } from '@angular/core';
-import { ChartOptions, ChartType } from 'chart.js';
+import { ChartOptions, ChartType, ChartDataset } from 'chart.js';
 
 @Component({
   selector: 'app-reset-option',
@@ -10,11 +10,11 @@ import { ChartOptions, ChartType } from 'chart.js';
 export class ResetOptionComponent implements OnInit {
 
   // lineChart
-  lineChartData: Array<any> = [
+  lineChartData: ChartDataset[] = [
     {
       label: 'My First dataset',
       fill: false,
-      lineTension: 0.1,
+      tension: 0.1,
       backgroundColor: 'rgba(75,192,192,0.4)',
       borderColor: 'rgba(75,192,192,1)',
       borderCapStyle: 'butt',
