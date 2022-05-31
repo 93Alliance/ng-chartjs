@@ -22,7 +22,7 @@ ng-chartjs already supports Chart.js 3.0, but the Chart.js 3.0 API is destructiv
 
 ## Usage & Demo
 
-[Demo](https://stackblitz.com/edit/angular-7eudux)
+[Demo](https://stackblitz.com/edit/angular-ivy-vvjycn?file=src/app/app.component.ts)
 
 ## Installation
 
