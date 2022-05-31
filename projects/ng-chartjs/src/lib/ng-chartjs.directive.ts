@@ -42,8 +42,7 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
   // 相当于chart.js的option
   @Input() options?: ChartConfiguration['options'];
   // 内联插件属性
-  // @ts-ignore
-  @Input() inlinePlugins: any[];
+  @Input() inlinePlugins?: any[];
   // chartType line, bar, radar, pie, polarArea, doughnut
   // @ts-ignore
   @Input() chartType: ChartConfiguration['type'];
@@ -59,7 +58,7 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
   // @ts-ignore
   @Input() removing: { orientation: Orientation };  // orientation is 'oldest' or 'latest
   // @ts-ignore
-  @Input() resetOption: ChartConfiguration['options'];
+  @Input() resetOption?: ChartConfiguration['options'];
 
   @Input() noZone = true; // disable angular NgZone
   // @ts-ignore
@@ -236,8 +235,8 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
 
   private getChartBuilder(ctx: CanvasRenderingContext2D/*, data:Array<any>, options:any*/): Chart {
     const datasets = this.getDatasets();
-
-    let options: ChartOptions = Object.assign({}, this.options); // 深复制options
+    let options: ChartOptions = this.options || {};
+    options = Object.assign({}, this.options); // 深复制options
     mergeJson(options, {
       plugins: {
         legend: {
@@ -263,6 +262,8 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
       };
     }
 
+    const inlinePlugins = this.inlinePlugins || [];
+
     const opts: ChartConfiguration = {
       type: this.chartType,
       data: {
@@ -270,7 +271,7 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
         datasets: datasets   // TODO: 后续更改这个属性名字，否则警告
       },
       options: options,   // TODO: 后续更改这个属性名字，否则警告
-      plugins: this.inlinePlugins
+      plugins: inlinePlugins
     };
 
     return new Chart(ctx, opts);
