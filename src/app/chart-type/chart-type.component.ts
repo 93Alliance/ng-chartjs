@@ -18,14 +18,13 @@ export class ChartTypeComponent implements OnInit {
   lineChartOptions: any = {
     responsive: true,
     scales: {
-      yAxes: [
-        {
+      y: {
           ticks: { beginAtZero: true, fontColor: 'black' },
           gridLines: {
             // color: 'rgba(0, 0, 0, 0)', // 隐藏要y轴轴线
             zeroLineColor: 'black'
           }
-        }]
+      }
     }
   };
   public lineChartLegend = true;
@@ -37,6 +36,15 @@ export class ChartTypeComponent implements OnInit {
   }
 
   changeChartType() {
+    if (this.chartType == 'bar') {
+      this.chartType = 'line';
+      this.lineChartData = [
+        { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
+      ];
+      this.lineChartLabels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+      return
+    }
+
     this.chartType = 'bar';
     this.lineChartData = [
       {

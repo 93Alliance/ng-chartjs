@@ -1,6 +1,6 @@
 import { NgChartjsService } from 'ng-chartjs';
 import { Component, OnInit } from '@angular/core';
-import * as Chart from 'chart.js';
+import { ChartOptions, ChartType } from 'chart.js';
 
 @Component({
   selector: 'app-reset-option',
@@ -34,50 +34,40 @@ export class ResetOptionComponent implements OnInit {
     },
   ];
   lineChartLabels: Array<any> = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-  lineChartOptions: any = {
+  lineChartOptions: ChartOptions = {
     responsive: true,
     scales: {
-      yAxes: [
-        {
-          ticks: { beginAtZero: true, fontColor: 'black' },
-          gridLines: {
-            // color: 'rgba(0, 0, 0, 0)', // 隐藏要y轴轴线
-            zeroLineColor: 'black'
-          }
-        }],
-      xAxes: [
-        {
-          ticks: { fontColor: 'black' },
-          gridLines: {
-            color: 'rgba(0, 0, 0, 0)', // 隐藏x轴方向轴线
-            zeroLineColor: 'black' // 设置轴颜色
-          },
+      y: {
+        ticks: { color: 'black' }
+      },
+      x: {
+        ticks: { color: 'black' },
+        grid: {
+          color: 'rgba(0, 0, 0, 0)', // 隐藏x轴方向轴线
         }
-      ]
+      }
     }
   };
   public lineChartLegend = true;
-  public lineChartType: Chart.ChartType = 'line';
+  public lineChartType: ChartType = 'line';
   resetOption: any;
   constructor(private ngChartjsService: NgChartjsService) { }
 
   ngOnInit() {
   }
+
   changeOption() {
     this.resetOption = {
       scales: {
-        xAxes: [
-          {
-            ticks: {fontColor: 'red'}
-          }
-        ]
+        x: {
+          ticks: { color: 'red' }
+        }
       }
     };
   }
   getChartInstance() {
     const chart: any = this.ngChartjsService.getChart('testChart');
     console.log(chart);
-    chart.options.scales.xAxes[0].ticks.display = false;
     chart.update();
   }
 }

@@ -1,6 +1,6 @@
 import { NgChartjsDirective } from 'ng-chartjs';
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { ChartDataSets } from 'chart.js';
+import { ChartData } from 'chart.js';
 
 @Component({
   selector: 'app-line-chart',
@@ -10,7 +10,7 @@ import { ChartDataSets } from 'chart.js';
 export class LineChartComponent implements OnInit, AfterViewInit {
 
   // lineChart
-  lineChartData: ChartDataSets[] = [
+  lineChartData: ChartData['datasets'] = [
     { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
     { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' },
     { data: [18, 48, 77, 9, 100, 27, 40], label: 'Series C' }
@@ -47,7 +47,7 @@ export class LineChartComponent implements OnInit, AfterViewInit {
     }
   ];
   public lineChartLegend = true;
-  public lineChartType: Chart.ChartType = 'line';
+  public lineChartType: any = 'line';
   updateData: any;
   // isUpdate: boolean;
   removing: any;

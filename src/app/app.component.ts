@@ -13,7 +13,7 @@ export class AppComponent {
 
   }
 
-  getInstance() {
+  public getInstance() {
     const chart1: any = this.ngChartjsService.getChart('test1');
     console.log('test1: ', chart1);
     const chart2: any = this.ngChartjsService.getChart('test2');

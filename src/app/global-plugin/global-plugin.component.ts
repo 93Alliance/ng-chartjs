@@ -49,24 +49,35 @@ export class GlobalPluginComponent implements OnInit {
   };
   lineChartGlobalPlugin: Chart.ChartOptions = {
     responsive: true,
-    annotation: {
-      annotations: [
-        {
-          drawTime: 'afterDraw',
-          type: 'line',
-          mode: 'horizontal',
-          scaleID: 'y-axis-0',
-          value: 70,
-          borderColor: '#000000',
-          borderWidth: 2,
-          label: {
-            backgroundColor: 'red',
-            content: 'Target line',
-            enabled: true,
-            position: 'center',
+    plugins: {
+      annotation: {
+        annotations: {
+          line1: {
+            type: 'line',
+            value: 70,
+            scaleID: 'y',
+            borderColor: 'rgb(255, 99, 132)',
+            borderWidth: 2,
+            label: {
+              backgroundColor: 'red',
+              content: 'Target line',
+              enabled: true,
+              position: 'center',
+              font: {
+                weight: 'bold'
+              }
+            }
+          },
+          box1: {
+            type: 'box',
+            xMin: 1,
+            xMax: 2,
+            yMin: 50,
+            yMax: 70,
+            backgroundColor: 'rgba(255, 99, 132, 0.25)'
           }
         }
-      ]
+      }
     }
   };
   public lineChartLegend = true;

@@ -2,7 +2,7 @@
     <div>Doughnut Chart</div>
     <canvas ngChartjs [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType"
       (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
-      <button mat-raised-button color="primary" (click)="addData()">Update Data</button>
+      <button mat-raised-button color="primary" (click)="changeData()">Update Data</button>
   </div>
 
   

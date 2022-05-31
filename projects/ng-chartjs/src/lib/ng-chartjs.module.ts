@@ -1,14 +1,8 @@
-import { NgModule, ModuleWithProviders, Optional, SkipSelf } from '@angular/core';
+import { NgModule, ModuleWithProviders, Optional, SkipSelf, Injectable } from '@angular/core';
+import { ChartComponentLike } from 'chart.js';
 import { NgChartjsDirective } from './ng-chartjs.directive';
-import { NgChartjsCustomPluginToken } from './plugin-token';
-import { PluginConfig } from './plugins-config';
 import { NgChartjsService } from './ng-chartjs.service';
-
-export function ngChartjsCustomPluginsFactory(plugins: any[]): PluginConfig {
-  const pluginConfig = new PluginConfig();
-  pluginConfig.plugins = plugins;
-  return pluginConfig;
-}
+import { NgChartjsCustomPluginConfig } from './plugins-config';
 
 @NgModule({
   imports: [],
@@ -19,20 +13,18 @@ export function ngChartjsCustomPluginsFactory(plugins: any[]): PluginConfig {
 export class NgChartjsModule {
   /**
    * Register a plugin.
-   * @param plugin
+   * @param plugins
    */
-  public static registerPlugin(plugins: any[] = []): ModuleWithProviders<NgChartjsModule> {
+  public static registerPlugin(plugins: ChartComponentLike[] = []): ModuleWithProviders<NgChartjsModule> {
+    const config = new NgChartjsCustomPluginConfig();
+    config.plugins = plugins;
+
     return {
       ngModule: NgChartjsModule,
       providers: [
         {
-          provide: NgChartjsCustomPluginToken,
-          useValue: plugins
-        },
-        {
-          deps: [NgChartjsCustomPluginToken],
-          provide:  PluginConfig,
-          useFactory: ngChartjsCustomPluginsFactory
+          provide: NgChartjsCustomPluginConfig,
+          useValue: config
         }
       ]
     };

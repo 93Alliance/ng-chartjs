@@ -36,7 +36,7 @@ export class PluginComponent implements OnInit {
     responsive: true
   };
   public lineChartLegend = true;
-  public lineChartType: Chart.ChartType = 'line';
+  public lineChartType: any = 'line';
   inlinePlugin: any;
   textPlugin: any;
   constructor() { }
@@ -46,9 +46,9 @@ export class PluginComponent implements OnInit {
     this.textPlugin = [{
       id: 'textPlugin',
       beforeDraw(chart: any): any {
-        const width = chart.chart.width;
-        const height = chart.chart.height;
-        const ctx = chart.chart.ctx;
+        const width = chart.width;
+        const height = chart.height;
+        const ctx = chart.ctx;
         ctx.restore();
         const fontSize = (height / 114).toFixed(2);
         ctx.font = `${fontSize}em sans-serif`;

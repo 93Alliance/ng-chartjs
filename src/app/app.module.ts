@@ -15,8 +15,7 @@ import { MaterialModule } from './shared/material.module';
 import { PluginComponent } from './plugin/plugin.component';
 import { GlobalPluginComponent } from './global-plugin/global-plugin.component';
 
-import * as ChartAnnotation from 'chartjs-plugin-annotation';
-// import * as PiechartOutlabels from 'chartjs-plugin-piechart-outlabels-compact';
+import annotationPlugin from 'chartjs-plugin-annotation';
 import { DoughnutChartComponent } from './doughnut-chart/doughnut-chart.component';
 import { RadarChartComponent } from './radar-chart/radar-chart.component';
 import { PolarChartComponent } from './polar-chart/polar-chart.component';
@@ -24,13 +23,10 @@ import { ResetOptionComponent } from './reset-option/reset-option.component';
 import { ChartTypeComponent } from './chart-type/chart-type.component';
 import { NgChartjsModule } from 'ng-chartjs';
 
-const chartAnnotation = ChartAnnotation;
-// const piechartOutlabels = PiechartOutlabels;
-// chartAnnotation['id'] = 'annotation';
 export function horizonalLine(chartInstance: any) {
-  const yScale = chartInstance.scales['y-axis-0'];
-  const canvas = chartInstance.chart;
-  const ctx = canvas.ctx;
+  const yScale = chartInstance.scales['y'];
+  const canvas = chartInstance.canvas;
+  const ctx = chartInstance.ctx;
   let index;
   let line;
   let style;
@@ -71,7 +67,7 @@ export function horizonalLine(chartInstance: any) {
   }
 }
 const horizonalLinePlugin = {
-  // id: 'cutomline',
+  id: 'cutomline',
   beforeDraw: horizonalLine
 };
 
@@ -93,7 +89,7 @@ const horizonalLinePlugin = {
   ],
   imports: [
     BrowserModule,
-    NgChartjsModule.registerPlugin([horizonalLinePlugin, chartAnnotation]),
+    NgChartjsModule.registerPlugin([horizonalLinePlugin, annotationPlugin]),
     // NgChartjsModule,
     BrowserAnimationsModule,
     MaterialModule,

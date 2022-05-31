@@ -4,10 +4,12 @@
   "lib": {
     "entryFile": "src/public-api.ts",
     "umdModuleIds": {
+      "chart.js/auto": "chart_js",
       "chart.js": "chart_js"
     }
   },
-  "whitelistedNonPeerDependencies": [
+  "allowedNonPeerDependencies": [
+    "chart.js/auto",
     "chart.js"
   ]
 }

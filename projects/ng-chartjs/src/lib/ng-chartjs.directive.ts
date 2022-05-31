@@ -10,14 +10,22 @@ import {
   Directive,
   NgZone
 } from '@angular/core';
-import * as Chart from 'chart.js';
+// import { Chart, ChartConfiguration, ChartEvent, DefaultDataPoint, registerables } from 'chart.js';
+import Chart, 
+{ 
+  ChartEvent, 
+  ChartConfiguration, 
+  ChartOptions, 
+  ChartDataset, 
+  ChartData 
+} from 'chart.js/auto';
 import { StoreService } from './store.service';
-import { NgChartjsService } from './ng-chartjs.service';
+import { deepCopyJson, mergeJson, NgChartjsService } from './ng-chartjs.service';
 import { getColors, Colors } from './colors';
 
 export type Labels = Array<string | string[] | number | number[] | Date | Date[] | any | any[]>;
 export type Orientation = 'oldest' | 'latest';
-export interface NgChartjsEvent { event: MouseEvent; active: Array<{}>; }
+export interface NgChartjsEvent { event: ChartEvent; active: Array<{}>; }
 
 /* tslint:disable-next-line */
 @Directive({ selector: 'canvas[ngChartjs]', exportAs: 'ngChartjs' })
@@ -28,17 +36,17 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
   @Input() data: number[] | any[];
   // 相当于chart.js内 data: {datasets: [{...}]}
   // @ts-ignore
-  @Input() datasets: Chart.ChartDataSets[];
+  @Input() datasets: ChartData['datasets'];
   // x轴标签。这对图表来说是必要的：线，条和雷达。并且只是图表的标签（悬停）：polarArea，pie和doughnut
   @Input() labels: Labels = [];
   // 相当于chart.js的option
-  @Input() options: Chart.ChartOptions = {};
+  @Input() options?: ChartConfiguration['options'];
   // 内联插件属性
   // @ts-ignore
   @Input() inlinePlugins: any[];
   // chartType line, bar, radar, pie, polarArea, doughnut
   // @ts-ignore
-  @Input() chartType: Chart.ChartType;
+  @Input() chartType: ChartConfiguration['type'];
   // 数据颜色，如果没有指定，将使用默认和|或随机颜色
   // @ts-ignore
   @Input() colors: Colors[];
@@ -51,7 +59,7 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
   // @ts-ignore
   @Input() removing: { orientation: Orientation };  // orientation is 'oldest' or 'latest
   // @ts-ignore
-  @Input() resetOption: Chart.ChartOptions;
+  @Input() resetOption: ChartConfiguration['options'];
 
   @Input() noZone = true; // disable angular NgZone
   // @ts-ignore
@@ -116,7 +124,7 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
       if (changes.hasOwnProperty('legend')) {
         if (changes.legend.currentValue !== changes.legend.previousValue) {
           // @ts-ignore
-          this.chart.options.legend.display = changes.legend.currentValue;
+          this.chart.options.plugins.legend.display = changes.legend.currentValue;
           this.hasChanges = true;
         }
       }
@@ -138,7 +146,8 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
       }
 
       if (changes.hasOwnProperty('resetOption')) {
-        Object.assign(this.chart.options, changes.resetOption.currentValue);
+        const resetOption = deepCopyJson(changes.resetOption.currentValue);
+        this.chart.options = mergeJson(resetOption, this.chart.options);
         this.hasChanges = true;
       }
 
@@ -210,7 +219,7 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
   private updateChartData(newDataValues: number[] | any[]): void {
     if (Array.isArray(newDataValues[0].data)) {
       // @ts-ignore
-      this.chart.data.datasets.forEach((dataset: Chart.ChartDataSets, i: number) => {
+      this.chart.data.datasets.forEach((dataset: ChartDataset, i: number) => {
         dataset.data = newDataValues[i].data;
 
         if (newDataValues[i].label) {
@@ -229,14 +238,19 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
   private getChartBuilder(ctx: CanvasRenderingContext2D/*, data:Array<any>, options:any*/): Chart {
     const datasets = this.getDatasets();
 
-    const options: Chart.ChartOptions = Object.assign({}, this.options); // 深复制options
-    if (this.legend === false) {  // 设置options的legend TODO: 后续这个属性去除，直接在options内设置
-      options.legend = { display: false };
-    }
+    let options: ChartOptions = Object.assign({}, this.options); // 深复制options
+    mergeJson(options, {
+      plugins: {
+        legend: {
+          display: this.legend
+        }
+      }
+    })
+
     // hock for onHover and onClick events
     options.hover = options.hover || {};
-    if (!options.hover.onHover) {
-      options.hover.onHover = (event: MouseEvent, active: Array<{}>) => {
+    if (!options.onHover) {
+      options.onHover = (event: ChartEvent, active: Array<{}>) => {
         if (active && !active.length) {
           return;
         }
@@ -245,12 +259,12 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
     }
 
     if (!options.onClick) {
-      options.onClick = (event: MouseEvent, active: Array<{}>) => {
+      options.onClick = (event: ChartEvent, active: Array<{}>) => {
         this.chartClick.emit({ event, active });
       };
     }
 
-    const opts = {
+    const opts: ChartConfiguration = {
       type: this.chartType,
       data: {
         labels: this.labels,
@@ -264,9 +278,9 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
   }
 
   // 获取 chart.js的datasets数据
-  private getDatasets(): Chart.ChartDataSets[] {
+  private getDatasets(): ChartData['datasets'] {
     // @ts-ignore
-    let datasets: Chart.ChartDataSets[] = void 0;
+    let datasets: ChartData['datasets'] = void 0;
     // in case if datasets is not provided, but data is present
     if (!this.datasets || !this.datasets.length && (this.data && this.data.length)) {
       if (Array.isArray(this.data[0])) {
@@ -289,11 +303,11 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
   }
 
   // update dataset colors
-  private updateColors(datasets: Chart.ChartDataSets[]): Chart.ChartDataSets[] {
+  private updateColors(datasets: ChartData['datasets']): ChartData['datasets'] {
     if (this.datasets && this.datasets.length || (datasets && datasets.length)) {
       // fix elm type, pre type is number
-      datasets = (this.datasets || datasets).map((elm: Chart.ChartDataSets, index: number) => {
-        const newElm: Chart.ChartDataSets = Object.assign({}, elm);
+      datasets = (this.datasets || datasets).map((elm: any, index: number) => {
+        const newElm = Object.assign({}, elm);
         if (this.colors && this.colors.length) {
           Object.assign(newElm, this.colors[index]);
         } else {
@@ -333,7 +347,7 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
       // @ts-ignore
       this.chart.data.labels.pop();
       // @ts-ignore
-      this.chart.data.datasets.forEach((dataset: Chart.ChartDataSets) => {
+      this.chart.data.datasets.forEach((dataset: ChartData['datasets']) => {
         // @ts-ignore
         dataset.data.pop();
       });
@@ -341,7 +355,7 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
       // @ts-ignore
       this.chart.data.labels.shift();
       // @ts-ignore
-      this.chart.data.datasets.forEach((dataset: Chart.ChartDataSets) => {
+      this.chart.data.datasets.forEach((dataset: ChartData['datasets']) => {
         // @ts-ignore
         dataset.data.shift();
       });
