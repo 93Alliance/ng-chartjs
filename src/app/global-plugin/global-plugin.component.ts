@@ -9,11 +9,11 @@ import * as Chart from 'chart.js';
 export class GlobalPluginComponent implements OnInit {
 
   // lineChart
-  lineChartData: Array<any> = [
+  lineChartData: Chart.ChartDataset[] = [
     {
       label: 'My First dataset',
       fill: false,
-      lineTension: 0.1,
+      tension: 0.1,
       backgroundColor: 'rgba(75,192,192,0.4)',
       borderColor: 'rgba(75,192,192,1)',
       borderCapStyle: 'butt',

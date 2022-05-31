@@ -8,12 +8,16 @@ A fully functional Angular2+ chart.js library.This chart library based on `ng2-c
 
 | Angular | ng-chartjs| NPM package | chart.js |
 |  :---:  |   :---:   |   :---:     | :---: |
+| 12.x.x   |   0.2.5   | ng-chartjs@0.2.5 | chart.js@^3.0.0 |
 | 12.x.x   |   0.2.4   | ng-chartjs@0.2.4 | chart.js@^2.9.4 |
 | 11.x.x   |   0.2.3   | ng-chartjs@0.2.3 | chart.js@^2.9.4 |
 | 11.x.x   |   0.2.2   | ng-chartjs@^0.2.2 | chart.js@^2.9.4 |
 | 9.x.x   |   0.2.1   | ng-chartjs@^0.2.1 | chart.js@^2.9.4 |
 | 8.x.x   |   0.1.9   | ng-chartjs@^0.1.9 | |
 | 7.x.x   |   0.1.1   | ng-chartjs@^0.1.1 | |
+
+ng-chartjs already supports Chart.js 3.0, but the Chart.js 3.0 API is destructive, please use it with caution.
+
 
 ## Usage & Demo
 
@@ -28,11 +32,8 @@ npm install ng-chartjs --save
 2.You need to install Chart.js library in application.
 ```
 npm install chart.js --save
-npm install @types/chart.js -D
 ```
 ## Usage
-
-- [ ]	To be added
 
 ## API
 ## Import 
@@ -94,13 +95,13 @@ eg. [source code](https://github.com/93Alliance/ng-chartjs/tree/master/src/app/p
 
 ```
 ...
-import { Chart } from 'chart.js';
+import * as Chart from 'chart.js';';
 
-lineChartData: Chart.ChartDataSets[] = [
+  lineChartData: Chart.ChartDataset[] = [
     {
       label: 'My First dataset',
       fill: false,
-      lineTension: 0.1,
+      tension: 0.1,
       backgroundColor: 'rgba(75,192,192,0.4)',
       borderColor: 'rgba(75,192,192,1)',
       borderCapStyle: 'butt',
@@ -123,7 +124,7 @@ lineChartData: Chart.ChartDataSets[] = [
   lineChartOptions: any = {
     responsive: true
   };
-   lineChartLegend = true;
+  lineChartLegend = true;
   lineChartType = 'line';
   inlinePlugin: any;
   textPlugin: any;
@@ -133,9 +134,9 @@ lineChartData: Chart.ChartDataSets[] = [
     this.textPlugin = [{
       id: 'textPlugin',
       beforeDraw(chart: any): any {
-        const width = chart.chart.width;
-        const height = chart.chart.height;
-        const ctx = chart.chart.ctx;
+        const width = chart.width;
+        const height = chart.height;
+        const ctx = chart.ctx;
         ctx.restore();
         const fontSize = (height / 114).toFixed(2);
         ctx.font = `${fontSize}em sans-serif`;
@@ -168,14 +169,15 @@ eg. [source code](https://github.com/93Alliance/ng-chartjs/tree/master/src/app/g
 
 Customize global plugin.
 ```
-export function horizonalLine(chartInstance) {
-  const yScale = chartInstance.scales['y-axis-0'];
-  const canvas = chartInstance.chart;
-  const ctx = canvas.ctx;
+export function horizonalLine(chartInstance: any) {
+  const yScale = chartInstance.scales['y'];
+  const canvas = chartInstance.canvas;
+  const ctx = chartInstance.ctx;
   let index;
   let line;
   let style;
   let yValue;
+
   if (chartInstance.options.horizontalLine) {
     for (index = 0; index < chartInstance.options.horizontalLine.length; index++) {
       line = chartInstance.options.horizontalLine[index];
@@ -212,6 +214,7 @@ export function horizonalLine(chartInstance) {
 }
 
 const horizonalLinePlugin = {
+  id: 'cutomline',
   beforeDraw: horizonalLine
 };
 ```
@@ -235,11 +238,11 @@ imports: [
 
 `ts` file.
 ```
-lineChartData: Array<any> = [
+lineChartData: Chart.ChartDataset[] = [
     {
       label: 'My First dataset',
       fill: false,
-      lineTension: 0.1,
+      tension: 0.1,
       backgroundColor: 'rgba(75,192,192,0.4)',
       borderColor: 'rgba(75,192,192,1)',
       borderCapStyle: 'butt',
@@ -286,13 +289,12 @@ View
 eg. [source code](https://github.com/93Alliance/ng-chartjs/tree/master/src/app/global-plugin)
 
 ```
-import * as ChartAnnotation from 'chartjs-plugin-annotation';
-const chartAnnotation = ChartAnnotation;
+import annotationPlugin from 'chartjs-plugin-annotation';
 ...
 
 // In your App's module:
 imports: [
-   NgChartjsModule.registerPlugin([chartAnnotation])
+   NgChartjsModule.registerPlugin([annotationPlugin])
 ]
 ```
 Using the plugin directly within the options property.
@@ -301,23 +303,32 @@ Using the plugin directly within the options property.
 options = {
 	responsive: true,
 	annotation: {  // use global plugin.
-	      annotations: [
-	      {
-		  drawTime: 'afterDraw',
-		  type: 'line',
-		  mode: 'horizontal',
-		  scaleID: 'y-axis-0',
-		  value: 70,
-		  borderColor: '#000000',
-		  borderWidth: 2,
-		  label: {
-		    backgroundColor: 'red',
-		    content: 'Target line',
-		    enabled: true,
-		    position: 'center',
-		  }
-		}
-	      ]
+    annotations: {
+        line1: {
+          type: 'line',
+          value: 70,
+          scaleID: 'y',
+          borderColor: 'rgb(255, 99, 132)',
+          borderWidth: 2,
+          label: {
+            backgroundColor: 'red',
+            content: 'Target line',
+            enabled: true,
+            position: 'center',
+            font: {
+              weight: 'bold'
+            }
+          }
+        },
+        box1: {
+          type: 'box',
+          xMin: 1,
+          xMax: 2,
+          yMin: 50,
+          yMax: 70,
+          backgroundColor: 'rgba(255, 99, 132, 0.25)'
+        }
+      }
 	}
 };
 ```
@@ -346,7 +357,6 @@ import { NgChartjsService } from 'ng-chartjs';
 ...
 ngInit() {
     const chart: any = this.ngChartjsService.getChart('testChart');
-    chart.options.scales.xAxes[0].ticks.display = false;
     chart.update();
 }
 ...

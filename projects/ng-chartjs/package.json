@@ -4,7 +4,7 @@
   "peerDependencies": {
     "@angular/common": "*",
     "@angular/core": "*",
-    "chart.js": ">=3.0.0"
+    "chart.js": "^3.0.0"
   },
   "description": "This is a Angular chart.js library.",
   "main": "karma.conf.js",

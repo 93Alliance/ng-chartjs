@@ -71,8 +71,7 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
   @Output() chartHover: EventEmitter<NgChartjsEvent> = new EventEmitter();
 
   // get Chartjs object
-  // @ts-ignore
-  chart: Chart;
+  chart!: Chart;
   // @ts-ignore
   private ctx: CanvasRenderingContext2D;
   private initFlag = false;
