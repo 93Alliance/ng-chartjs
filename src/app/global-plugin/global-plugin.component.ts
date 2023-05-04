@@ -61,7 +61,8 @@ export class GlobalPluginComponent implements OnInit {
             label: {
               backgroundColor: 'red',
               content: 'Target line',
-              enabled: true,
+              display: true,
+              // enabled: true,
               position: 'center',
               font: {
                 weight: 'bold'
