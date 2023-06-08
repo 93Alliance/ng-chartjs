@@ -1,0 +1,14 @@
+<p>multi-line works!</p>
+
+<div style="width: 600px; text-align: center;margin-top:20px">
+    <div>Multi Line remove and add</div>
+    <canvas #ngChartjs="ngChartjs" ngChartjs [datasets]="lineChartData" [labels]="lineChartLabels"
+      [legend]="lineChartLegend"
+      [chartType]="lineChartType"
+      [options]="lineChartOptions"
+      ></canvas>
+    <div class="example-button-row">
+      <button mat-raised-button color="primary" (click)="addLine()">Add a new line</button>
+      <button style="margin-left: 6px;" mat-raised-button color="primary" (click)="removeLine()">Remove a line</button>
+    </div>
+  </div>

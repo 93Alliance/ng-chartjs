@@ -217,13 +217,16 @@ export class NgChartjsDirective implements OnDestroy, OnChanges, OnInit {
   private updateChartData(newDataValues: number[] | any[]): void {
     if (Array.isArray(newDataValues[0].data)) {
       // @ts-ignore
-      this.chart.data.datasets.forEach((dataset: ChartDataset, i: number) => {
-        dataset.data = newDataValues[i].data;
+      // this.chart.data.datasets.forEach((dataset: ChartDataset, i: number) => {
+      //   dataset.data = newDataValues[i].data;
 
-        if (newDataValues[i].label) {
-          dataset.label = newDataValues[i].label;
-        }
-      });
+      //   if (newDataValues[i].label) {
+      //     dataset.label = newDataValues[i].label;
+      //   }
+      // });
+
+      // @ts-ignore
+      this.chart.data.datasets = newDataValues;
     } else {
       // @ts-ignore
       this.chart.data.datasets[0].data = newDataValues;

@@ -22,6 +22,7 @@ import { PolarChartComponent } from './polar-chart/polar-chart.component';
 import { ResetOptionComponent } from './reset-option/reset-option.component';
 import { ChartTypeComponent } from './chart-type/chart-type.component';
 import { NgChartjsModule } from 'ng-chartjs';
+import { MultiLineComponent } from './multi-line/multi-line.component';
 
 export function horizonalLine(chartInstance: any) {
   const yScale = chartInstance.scales['y'];
@@ -86,6 +87,7 @@ const horizonalLinePlugin = {
     ChartTypeComponent,
     // NgChartjsDirective,
     ChartComponent,
+    MultiLineComponent,
   ],
   imports: [
     BrowserModule,
